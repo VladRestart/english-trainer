@@ -1,0 +1,1669 @@
+<title>English с нуля</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Unbounded:wght@500;700&display=swap">
+<style>
+/* Layout: one narrow column like a phrasebook in your pocket; tabs on top, one task at a time */
+:root{
+  --bg:#EFF3F1; --surface:#FFFFFF; --ink:#132A2A; --muted:#5A6E6B; --line:#D5DFDC;
+  --accent:#0B767C; --accent-ink:#FFFFFF; --accent-soft:#DCEDEC;
+  --sun:#E89B1C; --sun-soft:#FBEBCD; --good:#2E8549; --good-soft:#DDF0E2; --bad:#C0442D; --bad-soft:#F8E0DA;
+  --board-a:#CFE3C3; --board-b:#B8D3A9; --blue:#2F6FD1; --red:#D1422F; --path:#E3D2A6;
+  --display:"Unbounded", "Arial Black", system-ui, sans-serif;
+  --body:"Golos Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D1919; --surface:#142424; --ink:#E5EEEB; --muted:#92A7A3; --line:#25403D;
+  --accent:#43B6BB; --accent-ink:#04201F; --accent-soft:#16393A;
+  --sun:#F2B44C; --sun-soft:#3A2E16; --good:#5CC27B; --good-soft:#173322; --bad:#EE7B63; --bad-soft:#3D1F19;
+  --board-a:#2E4B34; --board-b:#25402B; --blue:#5C93EA; --red:#E8644F; --path:#6A5A36;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0D1919; --surface:#142424; --ink:#E5EEEB; --muted:#92A7A3; --line:#25403D;
+  --accent:#43B6BB; --accent-ink:#04201F; --accent-soft:#16393A;
+  --sun:#F2B44C; --sun-soft:#3A2E16; --good:#5CC27B; --good-soft:#173322; --bad:#EE7B63; --bad-soft:#3D1F19;
+  --board-a:#2E4B34; --board-b:#25402B; --blue:#5C93EA; --red:#E8644F; --path:#6A5A36;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:20px 48px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+h1,h2{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:1.35rem;font-weight:700}
+h2{font-size:1.1rem;font-weight:500}
+p{margin:0}
+.muted{color:var(--muted)}
+.label{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand small{color:var(--muted);font-size:.85rem}
+.streak{display:inline-flex;align-items:center;gap:6px;background:var(--sun-soft);color:var(--ink);border-radius:999px;padding:4px 12px;font-weight:600;font-size:.9rem;font-variant-numeric:tabular-nums}
+.streak b{color:var(--sun)}
+
+nav{overflow-x:auto;scrollbar-width:none;margin-inline:-4px}
+nav::-webkit-scrollbar{display:none}
+.tabs{display:flex;gap:6px;padding:4px;width:max-content}
+.tab{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;font-weight:500;font-size:.92rem;white-space:nowrap}
+.tab[aria-current="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.stat{background:var(--bg);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.stat .n{font-family:var(--display);font-size:1.5rem;font-variant-numeric:tabular-nums}
+.bar{height:10px;background:var(--bg);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .3s}
+
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.mode{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:4px}
+.mode:hover{border-color:var(--accent)}
+.mode strong{font-size:1rem}
+.mode span{color:var(--muted);font-size:.88rem}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:.9rem}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--ink);font-weight:600}
+.chip .c{color:var(--muted);font-variant-numeric:tabular-nums;margin-left:4px;font-weight:400}
+
+.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:600;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.good{background:var(--good);color:#fff}
+.btn.bad{background:var(--bad);color:#fff}
+.btn:disabled{opacity:.5;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.row.split > *{flex:1 1 140px}
+
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{font-size:.75rem;font-weight:600;border-radius:999px;padding:3px 10px;background:var(--bg);color:var(--muted)}
+.pill.say{background:var(--accent-soft);color:var(--accent)}
+.pill.hear{background:var(--sun-soft);color:var(--ink)}
+.pill.new{background:var(--good-soft);color:var(--good)}
+.prompt{font-size:1.5rem;font-weight:600;line-height:1.3;text-wrap:balance}
+.prompt.en{font-family:var(--display);font-weight:500;font-size:1.35rem}
+.answer{border-top:1px dashed var(--line);padding-top:14px;display:flex;flex-direction:column;gap:6px}
+.answer .en{font-family:var(--display);font-size:1.25rem;font-weight:500;line-height:1.35}
+.speak{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 12px;font-size:.88rem;display:inline-flex;gap:6px;align-items:center}
+.speak svg{width:16px;height:16px}
+.progress-line{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.opts{display:grid;gap:8px}
+.opt{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px 14px;font-size:1rem}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt.right{background:var(--good-soft);border-color:var(--good)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.feedback{font-weight:600}
+.feedback.ok{color:var(--good)} .feedback.no{color:var(--bad)}
+
+.build{min-height:56px;border:2px dashed var(--line);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start}
+.build.ok{border-color:var(--good);background:var(--good-soft)} .build.no{border-color:var(--bad);background:var(--bad-soft)}
+.wordchip{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:8px 12px;font-size:1rem;font-weight:500}
+.build .wordchip{background:var(--surface)}
+
+.chat{display:flex;flex-direction:column;gap:10px;max-height:56vh;overflow-y:auto;padding:4px}
+.msg{max-width:88%;border-radius:16px;padding:10px 14px;display:flex;flex-direction:column;gap:6px;min-width:0;overflow-wrap:anywhere}
+.msg.bot{background:var(--bg);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.me{background:var(--accent);color:var(--accent-ink);align-self:flex-end;border-bottom-right-radius:4px}
+.msg .ru{color:var(--muted);font-size:.9rem}
+.msg .tools{display:flex;gap:6px;flex-wrap:wrap}
+.msg .tools button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 10px;font-size:.8rem}
+.fix{align-self:flex-end;max-width:88%;background:var(--sun-soft);border-radius:12px;padding:8px 12px;font-size:.9rem}
+.fix b{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.composer{display:flex;gap:8px}
+.composer input{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:12px 14px;font:inherit}
+
+.search{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:10px 14px;font:inherit}
+.phr-group{display:flex;flex-direction:column}
+.phr{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:10px 0;border-top:1px solid var(--line);align-items:center}
+.phr .t{min-width:0}
+.phr .t strong{display:block;font-weight:600}
+.phr .t span{color:var(--muted);font-size:.92rem}
+.phr .r{display:flex;gap:6px;align-items:center}
+.lvl{width:44px;height:6px;background:var(--bg);border-radius:999px;overflow:hidden}
+.lvl i{display:block;height:100%;background:var(--accent)}
+.iconbtn{border:1px solid var(--line);background:var(--bg);border-radius:999px;width:34px;height:34px;display:grid;place-items:center}
+.iconbtn svg{width:16px;height:16px}
+.note{font-size:.88rem;color:var(--muted)}
+.pron{display:flex;flex-direction:column;gap:8px;background:var(--bg);border-radius:14px;padding:12px 14px}
+.mic{border:0;border-radius:999px;padding:10px 16px;font-weight:600;background:var(--ink);color:var(--bg);display:inline-flex;gap:8px;align-items:center}
+.mic svg{width:18px;height:18px}
+.mic.on{background:var(--bad);color:#fff}
+.words{font-family:var(--display);font-size:1.15rem;line-height:1.6;display:flex;flex-wrap:wrap;gap:4px 8px}
+.words .w-ok{color:var(--good)}
+.words .w-no{color:var(--bad);text-decoration:underline wavy;text-underline-offset:4px}
+.heard{font-size:.88rem;color:var(--muted)}
+.score{font-weight:600}
+.tr{color:var(--muted);font-size:.95rem;font-style:italic}
+
+/* Battle */
+.arena{display:flex;flex-direction:column;gap:12px}
+.turnbar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.side-tag{display:inline-flex;align-items:center;gap:6px;font-weight:600}
+.side-tag i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.side-tag.blue i{background:var(--blue)} .side-tag.red i{background:var(--red)}
+.board{position:relative;width:100%;aspect-ratio:8/6;border-radius:16px;overflow:hidden;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(6,1fr);user-select:none;-webkit-user-select:none;touch-action:manipulation;border:1px solid var(--line)}
+.cell{border:0;padding:0;margin:0;background:var(--board-a);position:relative;cursor:default}
+.cell.dark{background:var(--board-b)}
+.cell.mine{cursor:pointer}
+.cell.mine:hover{filter:brightness(1.06)}
+.cell.move{cursor:pointer}
+.cell.move::after{content:"";position:absolute;inset:36%;border-radius:50%;background:var(--good);opacity:.7}
+.cell.target{cursor:pointer;box-shadow:inset 0 0 0 3px var(--bad);background-image:radial-gradient(circle,transparent 55%,color-mix(in srgb,var(--bad) 30%,transparent))}
+.cell.sel{box-shadow:inset 0 0 0 3px var(--sun)}
+.units{position:absolute;inset:0;pointer-events:none}
+.unit{position:absolute;width:12.5%;height:16.667%;display:flex;align-items:center;justify-content:center;transition:left .45s ease,top .45s ease,opacity .6s ease}
+.unit .base{position:absolute;bottom:9%;width:68%;height:17%;border-radius:50%;opacity:.6}
+.unit.blue .base{background:var(--blue)} .unit.red .base{background:var(--red)}
+.unit.active .base{opacity:1;box-shadow:0 0 0 3px var(--sun)}
+.unit .body{position:relative;font-size:clamp(20px,6.4vw,46px);line-height:1;animation:bob 2.4s ease-in-out infinite;filter:drop-shadow(0 3px 2px rgba(0,0,0,.35))}
+.unit .sprite{display:inline-block}
+.unit.red .sprite,.unit.blue.flip .sprite,.ic.flip{transform:scaleX(-1)}
+.unit.red.flip .sprite{transform:none}
+.unit .hp{position:absolute;top:5%;left:16%;right:16%;height:5px;background:rgba(0,0,0,.35);border-radius:3px;overflow:hidden}
+.unit .hp i{display:block;height:100%;background:#4FC26E;transition:width .4s}
+.unit .hp i.low{background:#F05A43}
+.unit .stars{position:absolute;bottom:2%;font-size:clamp(7px,1.6vw,11px);color:var(--sun);text-shadow:0 1px 1px rgba(0,0,0,.6);letter-spacing:1px}
+.unit.lunge .body{animation:lunge .4s ease}
+.unit.hit .body{animation:shake .45s ease}
+.unit.dead{opacity:0}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7%)}}
+@keyframes lunge{0%,100%{transform:translateX(0)}45%{transform:translateX(var(--dx,20%)) scale(1.12)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10%)}40%{transform:translateX(10%)}60%{transform:translateX(-6%)}80%{transform:translateX(6%)}}
+.dmg{position:absolute;transform:translate(-50%,-50%);font-family:var(--display);font-weight:700;font-size:clamp(14px,3vw,22px);color:#fff;text-shadow:0 2px 3px rgba(0,0,0,.8);animation:floatup 1s ease forwards;pointer-events:none}
+.dmg.miss{color:#FFE08A}
+@keyframes floatup{from{opacity:1;margin-top:0}to{opacity:0;margin-top:-6%}}
+.bolt{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--sun);box-shadow:0 0 12px 3px var(--sun);transform:translate(-50%,-50%);transition:left .35s linear,top .35s linear;pointer-events:none}
+.timer i{background:var(--sun);transition:width .2s linear}
+.unitcard{display:flex;gap:14px;align-items:center}
+.unitcard .big{font-size:44px;line-height:1}
+.statrow{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.9rem;color:var(--muted)}
+.statrow b{color:var(--ink);font-variant-numeric:tabular-nums}
+.army{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.army div{display:flex;gap:10px;align-items:center;background:var(--bg);border-radius:12px;padding:8px 10px;font-size:.88rem}
+.army span.ic{font-size:28px}
+.unit.dodge .body{animation:dodge .45s ease}
+@keyframes dodge{0%,100%{transform:translate(0,0)}40%{transform:translate(-18%,-22%) rotate(-8deg)}}
+.dmg.info{color:#FFE08A;font-size:clamp(11px,2.2vw,16px);white-space:nowrap}
+.dmg.big{font-size:clamp(18px,4vw,30px);color:#FFD34D}
+.bolt.magic{background:#B98CFF;box-shadow:0 0 14px 4px #B98CFF}
+.guard{background:var(--bad-soft);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+.rules{display:flex;flex-direction:column;gap:6px;background:var(--bg);border-radius:12px;padding:12px 14px;font-size:.92rem}
+@media (prefers-reduced-motion: reduce){.unit .body{animation:none}}
+
+/* Towers */
+.td{display:flex;flex-direction:column;gap:12px}
+.td canvas{width:100%;aspect-ratio:3/2;border-radius:16px;border:1px solid var(--line);display:block;touch-action:manipulation;cursor:pointer;background:var(--board-a)}
+.hud{display:flex;gap:8px 16px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.stat-i{font-weight:600;font-variant-numeric:tabular-nums}
+.shop{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}
+.shopitem{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px;display:flex;gap:10px;align-items:center}
+.shopitem[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.shopitem:disabled{opacity:.5;cursor:default}
+.shopitem .ic{font-size:26px}
+.shopitem small{display:block;color:var(--muted)}
+.tr::before{content:"["} .tr::after{content:"]"}
+.empty{padding:24px 8px;text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center}
+footer{font-size:.82rem;color:var(--muted);text-align:center}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand"><h1>English с нуля</h1><small>фразы на каждый день</small></div>
+    <span class="streak" id="streak" title="Дней подряд"><b>●</b> <span id="streakN">0</span> дн. подряд</span>
+  </header>
+
+  <nav aria-label="Разделы"><div class="tabs" id="tabs">
+    <button class="tab" data-view="home">Сегодня</button>
+    <button class="tab" data-view="battle">Битва</button>
+    <button class="tab" data-view="towers">Башни</button>
+    <button class="tab" data-view="cards">Карточки</button>
+    <button class="tab" data-view="quiz">Что сказать?</button>
+    <button class="tab" data-view="listen">На слух</button>
+    <button class="tab" data-view="say">Произношение</button>
+    <button class="tab" data-view="build">Собери фразу</button>
+    <button class="tab" data-view="chat">Диалог</button>
+    <button class="tab" data-view="book">Разговорник</button>
+  </div></nav>
+
+  <main>
+    <section class="view" id="v-home"></section>
+    <section class="view" id="v-battle" hidden></section>
+    <section class="view" id="v-towers" hidden></section>
+    <section class="view" id="v-cards" hidden></section>
+    <section class="view" id="v-quiz" hidden></section>
+    <section class="view" id="v-listen" hidden></section>
+    <section class="view" id="v-say" hidden></section>
+    <section class="view" id="v-build" hidden></section>
+    <section class="view" id="v-chat" hidden></section>
+    <section class="view" id="v-book" hidden></section>
+  </main>
+
+  <footer id="sync">Прогресс сохраняется в этом браузере</footer>
+</div>
+
+<script>
+// ---------- Phrases: type|English|Russian. "say" = говоришь ты, "hear" = слышишь в ответ ----------
+const SITUATIONS = [
+ {id:"meet", name:"Знакомство", raw:`say|Nice to meet you.|Приятно познакомиться.
+say|My name is Vlad.|Меня зовут Влад.
+say|What's your name?|Как тебя зовут?
+say|Where are you from?|Откуда ты?
+say|I'm from Russia.|Я из России.
+say|I live in Nha Trang.|Я живу в Нячанге.
+hear|What do you do?|Чем ты занимаешься?
+say|I make videos for my blog.|Я делаю видео для своего блога.
+say|My English is not very good.|Мой английский не очень хороший.
+say|Could you speak more slowly, please?|Говорите, пожалуйста, помедленнее.
+say|Sorry, I don't understand.|Извините, я не понимаю.
+say|See you later!|Увидимся!`},
+ {id:"shop", name:"Магазин и цены", raw:`say|How much is this?|Сколько это стоит?
+say|How much are these?|Сколько стоят вот эти?
+say|It's too expensive.|Это слишком дорого.
+say|Can you give me a discount?|Можете сделать скидку?
+say|Do you have a smaller size?|У вас есть размер поменьше?
+say|Can I try it on?|Можно примерить?
+say|I'm just looking, thanks.|Я просто смотрю, спасибо.
+say|I'll take it.|Я возьму это.
+say|Can I pay by card?|Можно оплатить картой?
+hear|Cash or card?|Наличными или картой?
+hear|Do you need a bag?|Вам нужен пакет?
+say|Can I have a receipt, please?|Можно чек, пожалуйста?`},
+ {id:"way", name:"Как пройти", raw:`say|Excuse me, where is the supermarket?|Извините, где находится супермаркет?
+say|How do I get to the beach?|Как мне пройти к пляжу?
+say|Is it far from here?|Это далеко отсюда?
+say|Is there a pharmacy near here?|Здесь рядом есть аптека?
+say|Can you show me on the map?|Можете показать на карте?
+hear|It's close, just over there.|Это близко, вон там.
+hear|Go that way.|Идите туда.
+hear|Go straight, then turn left.|Идите прямо, потом поверните налево.
+hear|Turn right at the corner.|На углу поверните направо.
+hear|It's next to the bank.|Это рядом с банком.
+hear|It's about five minutes on foot.|Примерно пять минут пешком.
+say|I'm lost.|Я заблудился.`},
+ {id:"cafe", name:"Кафе", raw:`say|A table for two, please.|Столик на двоих, пожалуйста.
+say|Can I see the menu, please?|Можно меню, пожалуйста?
+hear|Are you ready to order?|Вы готовы сделать заказ?
+say|What do you recommend?|Что вы посоветуете?
+say|I'd like a coffee with milk.|Я бы хотел кофе с молоком.
+say|Not spicy, please.|Не острое, пожалуйста.
+say|No ice, please.|Без льда, пожалуйста.
+hear|For here or to go?|Здесь или с собой?
+say|To go, please.|С собой, пожалуйста.
+say|The bill, please.|Счёт, пожалуйста.
+say|It was delicious, thank you!|Было очень вкусно, спасибо!`},
+ {id:"bank", name:"Банк и документы", raw:`say|I'd like to open a bank account.|Я хотел бы открыть счёт в банке.
+say|How can I get a bank card?|Как мне оформить банковскую карту?
+say|What documents do I need?|Какие документы мне нужны?
+hear|Can I see your passport, please?|Можно ваш паспорт, пожалуйста?
+hear|Please fill in this form.|Пожалуйста, заполните эту форму.
+hear|Sign here, please.|Распишитесь здесь, пожалуйста.
+say|How long does it take?|Сколько времени это займёт?
+hear|Come back tomorrow.|Приходите завтра.
+say|Where is the nearest ATM?|Где ближайший банкомат?
+say|My card doesn't work.|Моя карта не работает.
+say|I want to exchange money.|Я хочу обменять деньги.`},
+ {id:"taxi", name:"Такси и транспорт", raw:`hear|Where are you going?|Куда вы едете?
+say|Can you take me to this address?|Отвезите меня по этому адресу.
+say|How long does it take to get there?|Сколько туда ехать?
+say|Please stop here.|Остановите здесь, пожалуйста.
+say|Can you wait for me?|Можете меня подождать?
+hear|Your driver is on the way.|Ваш водитель уже в пути.
+say|Where is the bus stop?|Где автобусная остановка?
+say|One ticket to Da Lat, please.|Один билет до Далата, пожалуйста.
+say|I want to rent a bike for a week.|Я хочу арендовать байк на неделю.`},
+ {id:"home", name:"Жильё и отель", raw:`say|I have a reservation.|У меня есть бронь.
+say|What time is check-out?|Во сколько выезд?
+hear|Breakfast is from seven to ten.|Завтрак с семи до десяти.
+say|What's the Wi-Fi password?|Какой пароль от вайфая?
+say|The air conditioner doesn't work.|Кондиционер не работает.
+say|Can I stay one more night?|Можно остаться ещё на одну ночь?
+say|How much is the rent per month?|Сколько стоит аренда в месяц?
+say|Are bills included?|Коммунальные услуги включены?`},
+ {id:"health", name:"Аптека и помощь", raw:`say|I need help.|Мне нужна помощь.
+say|I don't feel well.|Я плохо себя чувствую.
+say|I have a headache.|У меня болит голова.
+say|Do you have something for a cold?|У вас есть что-нибудь от простуды?
+hear|Take one pill twice a day.|Принимайте по одной таблетке два раза в день.
+say|Where is the nearest hospital?|Где ближайшая больница?
+say|Please call a doctor.|Пожалуйста, вызовите врача.`},
+ {id:"blog", name:"Для блога", raw:`say|Welcome to my channel!|Добро пожаловать на мой канал!
+say|Today I'll show you my city.|Сегодня я покажу вам мой город.
+say|Can I film here?|Здесь можно снимать?
+say|Do you mind if I film you?|Вы не против, если я вас сниму?
+say|Write your questions in the comments.|Пишите свои вопросы в комментариях.
+say|Don't forget to subscribe.|Не забудьте подписаться.
+say|See you in the next video!|Увидимся в следующем видео!`}
+];
+const PHRASES = [];
+for (const s of SITUATIONS) for (const line of s.raw.split("\n")) {
+  const [type, en, ru] = line.split("|");
+  PHRASES.push({ id: en.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""), type, en, ru, sit: s.id });
+}
+const SIT = Object.fromEntries(SITUATIONS.map(s => [s.id, s]));
+
+// Pronunciation hints in Russian letters. Approximate: "з/с" in place of "th" means the tongue goes between the teeth.
+const HINTS = {
+ "Nice to meet you.": "найс ту мит ю", "My name is Vlad.": "май нейм из влад", "What's your name?": "уотс ёр нейм",
+ "Where are you from?": "уэр а ю фром", "I'm from Russia.": "айм фром раша", "I live in Nha Trang.": "ай лив ин ня чанг",
+ "What do you do?": "уот ду ю ду", "I make videos for my blog.": "ай мейк видиоуз фо май блог",
+ "My English is not very good.": "май инглиш из нот вэри гуд", "Could you speak more slowly, please?": "куд ю спик мор слоули, плиз",
+ "Sorry, I don't understand.": "сори, ай доунт андэстэнд", "See you later!": "си ю лэйтэ",
+ "How much is this?": "хау мач из зис", "How much are these?": "хау мач а зиз", "It's too expensive.": "итс ту икспэнсив",
+ "Can you give me a discount?": "кэн ю гив ми э дискаунт", "Do you have a smaller size?": "ду ю хэв э смолэ сайз",
+ "Can I try it on?": "кэн ай трай ит он", "I'm just looking, thanks.": "айм джаст лукин, сэнкс", "I'll take it.": "айл тейк ит",
+ "Can I pay by card?": "кэн ай пей бай кард", "Cash or card?": "кэш о кард", "Do you need a bag?": "ду ю нид э бэг",
+ "Can I have a receipt, please?": "кэн ай хэв э рисит, плиз",
+ "Excuse me, where is the supermarket?": "икскьюз ми, уэр из зэ супэмаркит", "How do I get to the beach?": "хау ду ай гет ту зэ бич",
+ "Is it far from here?": "из ит фар фром хиэ", "Is there a pharmacy near here?": "из зэр э фармэси ниэ хиэ",
+ "Can you show me on the map?": "кэн ю шоу ми он зэ мэп", "It's close, just over there.": "итс клоус, джаст оувэ зэр",
+ "Go that way.": "гоу зэт уэй", "Go straight, then turn left.": "гоу стрейт, зэн тёрн лефт",
+ "Turn right at the corner.": "тёрн райт эт зэ корнэ", "It's next to the bank.": "итс нэкст ту зэ бэнк",
+ "It's about five minutes on foot.": "итс эбаут файв минитс он фут", "I'm lost.": "айм лост",
+ "A table for two, please.": "э тейбл фо ту, плиз", "Can I see the menu, please?": "кэн ай си зэ мэню, плиз",
+ "Are you ready to order?": "а ю рэди ту ордэ", "What do you recommend?": "уот ду ю рэкэмэнд",
+ "I'd like a coffee with milk.": "айд лайк э кофи уиз милк", "Not spicy, please.": "нот спайси, плиз", "No ice, please.": "ноу айс, плиз",
+ "For here or to go?": "фо хиэ о ту гоу", "To go, please.": "ту гоу, плиз", "The bill, please.": "зэ бил, плиз",
+ "It was delicious, thank you!": "ит уоз дилишэс, сэнк ю",
+ "I'd like to open a bank account.": "айд лайк ту оупэн э бэнк экаунт", "How can I get a bank card?": "хау кэн ай гет э бэнк кард",
+ "What documents do I need?": "уот докьюмэнтс ду ай нид", "Can I see your passport, please?": "кэн ай си ёр паспорт, плиз",
+ "Please fill in this form.": "плиз фил ин зис форм", "Sign here, please.": "сайн хиэ, плиз", "How long does it take?": "хау лонг даз ит тейк",
+ "Come back tomorrow.": "кам бэк тэмороу", "Where is the nearest ATM?": "уэр из зэ ниэрэст эй-ти-эм",
+ "My card doesn't work.": "май кард дазнт уёрк", "I want to exchange money.": "ай уонт ту иксчейндж мани",
+ "Where are you going?": "уэр а ю гоуин", "Can you take me to this address?": "кэн ю тейк ми ту зис эдрэс",
+ "How long does it take to get there?": "хау лонг даз ит тейк ту гет зэр", "Please stop here.": "плиз стоп хиэ",
+ "Can you wait for me?": "кэн ю уэйт фо ми", "Your driver is on the way.": "ёр драйвэ из он зэ уэй",
+ "Where is the bus stop?": "уэр из зэ бас стоп", "One ticket to Da Lat, please.": "уан тикит ту да лат, плиз",
+ "I want to rent a bike for a week.": "ай уонт ту рэнт э байк фор э уик",
+ "I have a reservation.": "ай хэв э рэзэвэйшн", "What time is check-out?": "уот тайм из чек-аут",
+ "Breakfast is from seven to ten.": "брэкфэст из фром сэвн ту тэн", "What's the Wi-Fi password?": "уотс зэ уай-фай пасуёд",
+ "The air conditioner doesn't work.": "зи эр кэндишэнэ дазнт уёрк", "Can I stay one more night?": "кэн ай стэй уан мор найт",
+ "How much is the rent per month?": "хау мач из зэ рэнт пё манс", "Are bills included?": "а билз инклудид",
+ "I need help.": "ай нид хэлп", "I don't feel well.": "ай доунт фил уэл", "I have a headache.": "ай хэв э хэдэйк",
+ "Do you have something for a cold?": "ду ю хэв самсинг фор э коулд", "Take one pill twice a day.": "тейк уан пил твайс э дэй",
+ "Where is the nearest hospital?": "уэр из зэ ниэрэст хоспитл", "Please call a doctor.": "плиз кол э доктэ",
+ "Welcome to my channel!": "уэлкам ту май чэнл", "Today I'll show you my city.": "тудэй айл шоу ю май сити",
+ "Can I film here?": "кэн ай филм хиэ", "Do you mind if I film you?": "ду ю майнд иф ай филм ю",
+ "Write your questions in the comments.": "райт ёр куэсчэнз ин зэ комэнтс", "Don't forget to subscribe.": "доунт фогет ту сабскрайб",
+ "See you in the next video!": "си ю ин зэ нэкст видиоу"
+};
+for (const p of PHRASES) p.tr = HINTS[p.en] || "";
+
+// ---------- Progress ----------
+const INTERVALS = [0, 1, 2, 4, 8, 16, 32]; // days until next review for each level
+const NEW_PER_DAY = 8, DAILY_GOAL = 20, STORE_KEY = "eng-phrases-v1";
+const today = () => { const d = new Date(); return Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000); };
+const fresh = () => ({ cards: {}, sits: SITUATIONS.map(s => s.id), day: 0, newCount: 0, done: 0, streak: 0, lastActive: 0, updatedAt: 0 });
+function normalize(s) {
+  const f = fresh(); s = Object.assign(f, s || {});
+  if (!Array.isArray(s.sits) || !s.sits.length) s.sits = f.sits;
+  return s;
+}
+let state = normalize((() => { try { return JSON.parse(localStorage.getItem(STORE_KEY)); } catch { return null; } })());
+
+function rollDay() { const t = today(); if (state.day !== t) { state.day = t; state.newCount = 0; state.done = 0; } }
+function streakNow() { return state.lastActive >= today() - 1 ? state.streak : 0; }
+function activity() {
+  rollDay(); const t = today();
+  if (state.lastActive !== t) { state.streak = state.lastActive === t - 1 ? state.streak + 1 : 1; state.lastActive = t; }
+  state.done++; save();
+}
+function grade(p, ok) {
+  const c = state.cards[p.id] || { b: 0 };
+  if (!state.cards[p.id]) state.newCount++;
+  c.b = ok ? Math.min(c.b + 1, INTERVALS.length - 1) : 1;
+  c.due = today() + (ok ? INTERVALS[c.b] : 0);
+  state.cards[p.id] = c; activity();
+}
+function miss(p) { const c = state.cards[p.id]; if (c) { c.b = 1; c.due = today(); } }
+
+let db = null, uid = null, saveTimer = null, writing = false, again = false;
+function save() {
+  state.updatedAt = Date.now();
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch {}
+  renderStreak();
+  if (db) { clearTimeout(saveTimer); saveTimer = setTimeout(pushDb, 1500); }
+}
+async function pushDb() {
+  if (!db) return;
+  if (writing) { again = true; return; }
+  writing = true;
+  try { await db.doc("data/users/" + uid + "/progress").set(JSON.parse(JSON.stringify(state))); } catch {}
+  writing = false;
+  if (again) { again = false; pushDb(); }
+}
+(async () => {
+  try {
+    if (!window.claude?.use) return;
+    const [d, u] = await Promise.all([claude.use("db"), claude.use("user")]);
+    if (!d || !u) return;
+    const id = await u.id(); if (!id) return;
+    const snap = await d.doc("data/users/" + id + "/progress").get();
+    db = d; uid = id;
+    if (snap.exists && (snap.data().updatedAt || 0) >= (state.updatedAt || 0)) {
+      state = normalize(JSON.parse(JSON.stringify(snap.data())));
+      try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch {}
+      show(current, true);
+    } else if (state.updatedAt) pushDb();
+    document.getElementById("sync").textContent = "Прогресс сохраняется в твоём аккаунте Claude: на телефоне и компьютере он общий";
+  } catch {}
+})();
+
+// ---------- Helpers ----------
+const $ = s => document.querySelector(s);
+function h(tag, attrs, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (k === "class") e.className = v; else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+    else if (v === true) e.setAttribute(k, ""); else if (v !== false && v != null) e.setAttribute(k, v);
+  }
+  for (const k of kids.flat()) if (k != null && k !== false) e.append(k.nodeType ? k : String(k));
+  return e;
+}
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const active = () => PHRASES.filter(p => state.sits.includes(p.sit));
+const SPK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>';
+const canSpeak = "speechSynthesis" in window;
+let voice = null;
+function pickVoice() { if (!canSpeak) return; const v = speechSynthesis.getVoices().filter(v => /^en[-_]/i.test(v.lang)); voice = v.find(v => /en[-_]US/i.test(v.lang) && /Google|Natural|Samantha|Aria|Jenny/i.test(v.name)) || v.find(v => /en[-_]US/i.test(v.lang)) || v[0] || null; }
+if (canSpeak) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+// Phrases play recorded American voices from audio/<id>.mp3; anything else (Claude's chat replies) uses the browser voice.
+const RECORDED = Object.fromEntries(PHRASES.map(p => [p.en, p.id]));
+const canPlay = text => !!RECORDED[text] || canSpeak;
+let player = null;
+function stopAudio() { if (player) { player.pause(); player = null; } window.speechSynthesis?.cancel(); }
+function speak(text, slow) {
+  stopAudio();
+  const id = RECORDED[text];
+  if (id) {
+    player = new Audio("audio/" + id + (slow ? "-slow" : "") + ".mp3");
+    player.play().catch(() => {});
+    return;
+  }
+  if (!canSpeak) return;
+  try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = "en-US"; if (voice) u.voice = voice; u.rate = slow ? 0.6 : 0.9; speechSynthesis.speak(u); } catch {}
+}
+function speakBtn(text, label = "Послушать", slow) {
+  const b = h("button", { class: "speak", type: "button", onclick: () => speak(text, slow) }); b.innerHTML = SPK; b.append(label);
+  if (!canPlay(text)) b.hidden = true; return b;
+}
+const tr = p => state.hint !== false && p.tr ? h("p", { class: "tr", title: "Подсказка примерная: ориентируйся на звук" }, p.tr) : null;
+const typePill = p => h("span", { class: "pill " + p.type }, p.type === "say" ? "Говоришь ты" : "Слышишь ты");
+
+// ---------- Pronunciation check (speech recognition; needs a microphone) ----------
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+// Inside the Claude viewer the microphone is not available, so the check only runs in the local version.
+let micBlocked = !!window.claude, liveRec = null;
+const MIC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v5"/></svg>';
+const NUM = { 1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten" };
+const normWord = w => w.toLowerCase().replace(/[’']/g, "").replace(/[^a-z0-9]/g, "");
+function normHeard(t) {
+  t = " " + t.toLowerCase().replace(/[’]/g, "'") + " ";
+  const pairs = [["i am", "i'm"], ["it is", "it's"], ["do not", "don't"], ["does not", "doesn't"], ["i will", "i'll"], ["i would", "i'd"], ["what is", "what's"], ["check out", "check-out"], ["wi fi", "wifi"]];
+  for (const [a, b] of pairs) t = t.split(" " + a + " ").join(" " + b + " ");
+  return t.trim().split(/\s+/).map(w => NUM[w] || w).map(normWord).filter(Boolean);
+}
+function compare(target, heard) {
+  const t = target.split(/\s+/).map(w => ({ w, n: normWord(w.replace(/-/g, "")) })).filter(x => x.n || x.w);
+  const hw = heard, n = t.length, m = hw.length;
+  const d = Array.from({ length: n + 1 }, () => new Array(m + 1).fill(0));
+  for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) d[i][j] = t[i].n === hw[j] ? d[i + 1][j + 1] + 1 : Math.max(d[i + 1][j], d[i][j + 1]);
+  let i = 0, j = 0; const ok = new Set();
+  while (i < n && j < m) { if (t[i].n === hw[j]) { ok.add(i); i++; j++; } else if (d[i + 1][j] >= d[i][j + 1]) i++; else j++; }
+  return { words: t.map((x, k) => ({ w: x.w, ok: ok.has(k) })), score: Math.round(ok.size / n * 100) };
+}
+// A "repeat after me" block: listen, press the mic, say the phrase, see which words were understood.
+function pronounce(p, onScored) {
+  const box = h("div", { class: "pron" });
+  const words = h("div", { class: "words" }, p.en.split(/\s+/).map(w => h("span", {}, w)));
+  const status = h("p", { class: "note" }, "Нажми на микрофон и скажи фразу вслух.");
+  const heard = h("p", { class: "heard", hidden: true });
+  const mic = h("button", { class: "mic", type: "button" }); mic.innerHTML = MIC; mic.append("Сказать");
+  box.append(h("span", { class: "label" }, "Проверь произношение"), words, tr(p), h("div", { class: "row" }, mic, speakBtn(p.en, "Образец"), speakBtn(p.en, "Медленно", true)), status, heard);
+  if (!SR || micBlocked) {
+    mic.disabled = true;
+    status.textContent = "Проверка произношения работает в версии для компьютера: запусти файл «Запустить.bat» и открой в Chrome или Edge. Здесь можно слушать образец и повторять вслух.";
+    return box;
+  }
+  mic.addEventListener("click", () => {
+    // iPhone Safari may end recognition without a final result, so keep what was heard and score it on stop.
+    if (liveRec) { const r = liveRec; try { r.stop(); } catch {} clearTimeout(r.guard); r.guard = setTimeout(() => r.finishUp(), 1800); return; }
+    stopAudio();
+    const rec = new SR(); liveRec = rec;
+    rec.lang = "en-US"; rec.interimResults = true; rec.maxAlternatives = 5;
+    let got = false, alts = [], error = false, finished = false;
+    mic.classList.add("on"); mic.lastChild.textContent = "Слушаю… (нажми, чтобы закончить)"; status.className = "note"; status.textContent = "Говори.";
+    const score = () => {
+      if (got || !alts.length) return;
+      got = true;
+      let best = null;
+      for (const a of alts) { const r = compare(p.en, normHeard(a)); if (!best || r.score > best.score) best = { ...r, text: a }; }
+      words.replaceChildren(...best.words.map(x => h("span", { class: x.ok ? "w-ok" : "w-no" }, x.w)));
+      heard.hidden = false; heard.textContent = "Я услышал: «" + best.text + "»";
+      status.className = "score " + (best.score >= 85 ? "feedback ok" : "feedback no");
+      status.textContent = best.score >= 85 ? `Отлично! Понятно на ${best.score}%.`
+        : best.score >= 50 ? `Почти: ${best.score}%. Послушай медленно и повтори слова, подчёркнутые красным.`
+        : `Пока ${best.score}%. Послушай образец медленно и попробуй ещё раз, чётко и не спеша.`;
+      onScored?.(best.score);
+    };
+    rec.finishUp = () => {
+      if (finished) return;
+      finished = true; clearTimeout(rec.guard);
+      if (liveRec === rec) liveRec = null;
+      score();
+      mic.classList.remove("on"); mic.lastChild.textContent = got ? "Сказать ещё раз" : "Сказать";
+      if (!got && !error) { status.className = "note"; status.textContent = "Ничего не услышал. Нажми ещё раз и говори чуть громче."; }
+    };
+    rec.onresult = e => {
+      const all = [...e.results];
+      const whole = all.map(r => r[0].transcript).join(" ").trim();
+      alts = [whole, ...[...all[all.length - 1]].map(a => a.transcript)].filter(Boolean);
+      if (whole) { heard.hidden = false; heard.textContent = "Слышу: «" + whole + "»"; }
+      if (all[all.length - 1].isFinal) score();
+    };
+    rec.onerror = e => {
+      error = true;
+      if (e.error === "not-allowed" || e.error === "service-not-allowed") { micBlocked = /iPhone|iPad/.test(navigator.userAgent) ? false : true; status.textContent = /iPhone|iPad/.test(navigator.userAgent) ? "Нет доступа к распознаванию речи. На iPhone включи: Настройки → Основные → Клавиатура → Включить диктовку, и разреши сайту микрофон." : "Нет доступа к микрофону. Разреши микрофон в браузере (значок слева от адреса) и попробуй снова."; }
+      else if (e.error === "no-speech") status.textContent = "Ничего не услышал. Говори чуть громче и ближе к микрофону.";
+      else if (e.error === "network") status.textContent = "Для распознавания речи нужен интернет. Проверь подключение.";
+      else if (e.error !== "aborted") status.textContent = "Не получилось распознать. Попробуй ещё раз.";
+      status.className = "note";
+    };
+    rec.onend = () => rec.finishUp();
+    try { rec.start(); } catch { rec.finishUp(); }
+  });
+  return box;
+}
+
+// Pronunciation practice: one phrase at a time, listen and repeat.
+const say = { list: [], i: 0 };
+function startSay() {
+  const act = active(), known = act.filter(p => state.cards[p.id]);
+  say.list = shuffle(known.length >= 5 ? known : act).slice(0, 10); say.i = 0; renderSay();
+}
+function renderSay() {
+  const v = $("#v-say"); v.replaceChildren();
+  const p = say.list[say.i];
+  if (!p) { v.append(h("div", { class: "panel empty" }, h("h2", {}, "10 фраз произнесено!"), h("p", { class: "muted" }, "Повторяй вслух каждый день, так рот привыкает к английским звукам."), h("button", { class: "btn", onclick: startSay }, "Ещё 10 фраз"))); return; }
+  let scored = false;
+  v.append(h("div", { class: "panel" },
+    h("div", { class: "card-top" }, h("div", { class: "row" }, h("span", { class: "pill" }, SIT[p.sit].name), typePill(p)), h("span", { class: "progress-line" }, `${say.i + 1} / ${say.list.length}`)),
+    h("p", { class: "label" }, "Послушай и повтори"), h("p", { class: "prompt" }, p.ru),
+    pronounce(p, () => { if (!scored) { scored = true; activity(); } }),
+    h("div", { class: "row" }, h("button", { class: "btn", onclick: () => { say.i++; renderSay(); } }, say.i + 1 < say.list.length ? "Следующая фраза" : "Готово"))));
+  speak(p.en);
+}
+
+// ---------- Battle: two armies on a board; every move costs an English task ----------
+const COLS = 8, ROWS = 6;
+const UNIT_TYPES = {
+  sword:  { name: "Мечник", icon: "🤺", tier: 1, hp: 30, dmg: [7, 10],  move: 2, range: 1, flip: true }, // flip: the emoji itself faces left
+  archer: { name: "Лучник", icon: "🧝", tier: 2, hp: 24, dmg: [10, 14], move: 2, range: 5 },
+  knight: { name: "Рыцарь", icon: "🏇", tier: 2, hp: 46, dmg: [13, 17], move: 3, range: 1, flip: true },
+  mage:   { name: "Маг",    icon: "🧙", tier: 3, hp: 28, dmg: [20, 26], move: 2, range: 4 },
+  dragon: { name: "Дракон", icon: "🐉", tier: 3, hp: 62, dmg: [24, 30], move: 4, range: 1, fly: true, flip: true }
+};
+const TIERS = {
+  1: { name: "лёгкое", what: "понять английскую фразу", time: 20 },
+  2: { name: "среднее", what: "выбрать, как сказать по-английски", time: 20 },
+  3: { name: "сложное", what: SR && !micBlocked ? "собрать фразу из слов или произнести её" : "собрать английскую фразу из слов", time: 45 }
+};
+const LINEUP = [["archer", 0, 2], ["mage", 0, 3], ["sword", 1, 1], ["knight", 1, 2], ["dragon", 1, 3], ["sword", 1, 4]];
+const ACC = { sword: "мечника", archer: "лучника", knight: "рыцаря", mage: "мага", dragon: "дракона" };
+// Computer strength: chance to answer each tier correctly, and how often it answers fast / at medium speed.
+const BOT_LEVELS = {
+  easy:   { name: "Лёгкий",  ok: { 1: 0.7, 2: 0.55, 3: 0.4 },   fast: 0.15, mid: 0.35 },
+  normal: { name: "Средний", ok: { 1: 0.85, 2: 0.7, 3: 0.55 },  fast: 0.3,  mid: 0.4 },
+  hard:   { name: "Сильный", ok: { 1: 0.95, 2: 0.85, 3: 0.75 }, fast: 0.5,  mid: 0.35 }
+};
+// Answer speed sets the blow: first third of the time = powerful, middle third = strong, last third = light.
+const POWER = { fast: { name: "Мощный удар", k: 1.4 }, mid: { name: "Сильный удар", k: 1 }, slow: { name: "Лёгкий удар", k: 0.6 } };
+// Defence against a blow from an adjacent enemy, by how fast the defender answers.
+const GUARD = { fast: "counter", mid: "dodge", slow: "graze" };
+const GUARD_TEXT = { fast: "уворот и контратака", mid: "уворот", slow: "урон на 20% меньше" };
+const SIDE = { blue: "Синие", red: "Красные" };
+let G = null;
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const cheb = (a, b) => Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
+const alive = side => G.units.filter(u => u.hp > 0 && (!side || u.side === side));
+const unitAt = (x, y) => G.units.find(u => u.hp > 0 && u.x === x && u.y === y);
+const unitById = id => G.units.find(u => u.id === id);
+const human = side => G.mode === "duo" || side === "blue";
+const selected = () => unitById(G.sel);
+const normPhrase = s => s.toLowerCase().replace(/[^a-z0-9' ]/g, "").replace(/\s+/g, " ").trim();
+const botLevel = () => BOT_LEVELS[state.botLevel] || BOT_LEVELS.normal;
+const speedOf = used => used < 1 / 3 ? "fast" : used < 2 / 3 ? "mid" : "slow";
+function botAnswer(tier) {
+  const L = botLevel(), ok = Math.random() < L.ok[tier], r = Math.random();
+  return { ok, speed: ok ? (r < L.fast ? "fast" : r < L.fast + L.mid ? "mid" : "slow") : null };
+}
+
+// ---- Sound effects, synthesized (no files) ----
+let actx = null, noiseBuf = null;
+function sfx(kind) {
+  if (state.sound === false) return;
+  try {
+    actx ??= new (window.AudioContext || window.webkitAudioContext)();
+    if (actx.state === "suspended") actx.resume();
+    const t = actx.currentTime, out = actx.createGain(); out.gain.value = 0.5; out.connect(actx.destination);
+    const tone = (type, f1, f2, start, dur, vol) => {
+      const o = actx.createOscillator(), g = actx.createGain(); o.type = type;
+      o.frequency.setValueAtTime(f1, t + start); o.frequency.exponentialRampToValueAtTime(f2, t + start + dur);
+      g.gain.setValueAtTime(vol, t + start); g.gain.exponentialRampToValueAtTime(0.001, t + start + dur);
+      o.connect(g).connect(out); o.start(t + start); o.stop(t + start + dur + 0.02);
+    };
+    const noise = (start, dur, freq, q, vol, type, f2) => {
+      if (!noiseBuf) { noiseBuf = actx.createBuffer(1, actx.sampleRate, actx.sampleRate); const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+      const s = actx.createBufferSource(), f = actx.createBiquadFilter(), g = actx.createGain();
+      s.buffer = noiseBuf; f.type = type; f.Q.value = q; f.frequency.setValueAtTime(freq, t + start);
+      if (f2) f.frequency.exponentialRampToValueAtTime(f2, t + start + dur);
+      g.gain.setValueAtTime(vol, t + start); g.gain.exponentialRampToValueAtTime(0.001, t + start + dur);
+      s.connect(f).connect(g).connect(out); s.start(t + start); s.stop(t + start + dur + 0.02);
+    };
+    if (kind === "swing") noise(0, 0.18, 800, 0.8, 0.35, "bandpass", 3000);
+    if (kind === "hit") { tone("sine", 160, 45, 0, 0.18, 0.7); noise(0, 0.08, 2500, 0.7, 0.4, "bandpass"); }
+    if (kind === "heavy") { tone("sine", 120, 35, 0, 0.32, 0.9); noise(0, 0.15, 1200, 0.6, 0.6, "bandpass"); tone("square", 90, 40, 0, 0.12, 0.15); }
+    if (kind === "arrow") noise(0, 0.25, 3000, 2, 0.35, "bandpass", 900);
+    if (kind === "magic") { tone("sine", 500, 1400, 0, 0.35, 0.25); tone("triangle", 750, 2100, 0.05, 0.3, 0.15); }
+    if (kind === "dodge") noise(0, 0.22, 1500, 1.5, 0.35, "bandpass", 5000);
+    if (kind === "death") { tone("sawtooth", 300, 50, 0, 0.6, 0.25); noise(0.05, 0.4, 600, 0.5, 0.3, "lowpass"); }
+    if (kind === "ok") { tone("sine", 660, 661, 0, 0.12, 0.25); tone("sine", 990, 991, 0.1, 0.18, 0.25); }
+    if (kind === "fail") tone("square", 180, 110, 0, 0.3, 0.12);
+    if (kind === "coin") { tone("square", 1320, 1980, 0, 0.07, 0.05); tone("square", 1980, 2400, 0.06, 0.08, 0.05); }
+    if (kind === "win") [523, 659, 784, 1047].forEach((f, i) => tone("triangle", f, f + 1, i * 0.13, 0.3, 0.3));
+  } catch {}
+}
+
+function newGame(mode) {
+  if (G) clearInterval(G.timer);
+  const units = []; let n = 0;
+  for (const side of ["blue", "red"]) for (const [type, x, y] of LINEUP)
+    units.push({ id: "u" + n++, side, type, x: side === "blue" ? x : COLS - 1 - x, y, hp: UNIT_TYPES[type].hp });
+  G = { id: Date.now(), mode, units, turn: "blue", phase: "select", sel: null, task: null, power: null, msg: "", busy: false, nodes: {}, score: { blue: 0, red: 0 } };
+  renderBattle();
+}
+
+// Cells a unit can step to: 8 directions like a chess king, up to `move` steps. Map "x,y" -> steps.
+function reach(u) {
+  const t = UNIT_TYPES[u.type], seen = new Map([[u.x + "," + u.y, 0]]), q = [[u.x, u.y, 0]];
+  while (q.length) {
+    const [x, y, d] = q.shift(); if (d >= t.move) continue;
+    for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) {
+      const nx = x + dx, ny = y + dy, k = nx + "," + ny;
+      if ((!dx && !dy) || nx < 0 || ny < 0 || nx >= COLS || ny >= ROWS || seen.has(k)) continue;
+      if (unitAt(nx, ny) && !t.fly) continue;
+      seen.set(k, d + 1); q.push([nx, ny, d + 1]);
+    }
+  }
+  for (const k of [...seen.keys()]) { const [x, y] = k.split(",").map(Number), occ = unitAt(x, y); if (occ && occ !== u) seen.delete(k); }
+  return seen;
+}
+// Enemies the unit can hit this turn, with the cell it strikes from.
+function targets(u, cells) {
+  const t = UNIT_TYPES[u.type], out = new Map();
+  for (const e of alive(u.side === "blue" ? "red" : "blue")) {
+    if (t.range > 1) { if (cheb(u, e) <= t.range) out.set(e.id, { e, from: { x: u.x, y: u.y } }); continue; }
+    let best = null;
+    for (const [k, d] of cells) { const [x, y] = k.split(",").map(Number); if (cheb({ x, y }, e) === 1 && (!best || d < best.d)) best = { x, y, d }; }
+    if (best) out.set(e.id, { e, from: best });
+  }
+  return out;
+}
+
+function renderBattle() {
+  const v = $("#v-battle");
+  if (!G) { delete v.dataset.game; v.replaceChildren(battleMenu()); return; }
+  if (v.dataset.game !== String(G.id)) buildArena(v);
+  drawBoard(); drawPanel();
+}
+function battleMenu() {
+  const lvl = state.botLevel in BOT_LEVELS ? state.botLevel : "normal";
+  return h("div", { class: "panel" },
+    h("div", {}, h("h2", {}, "Битва знаний"), h("p", { class: "muted" }, "Две армии на доске, ходите по очереди. Выбираешь солдата и получаешь задание по-английски. Ответил верно: солдат ходит или бьёт. Ошибся или не успел: пропускает ход. Чем сильнее солдат, тем сложнее задание. Побеждает тот, кто первым разобьёт армию противника.")),
+    h("div", { class: "army" }, Object.values(UNIT_TYPES).map(t => h("div", {}, h("span", { class: "ic" + (t.flip ? " flip" : "") }, t.icon),
+      h("span", {}, h("b", {}, t.name), h("br"), `${"★".repeat(t.tier)} урон ${t.dmg[0]}–${t.dmg[1]}`)))),
+    h("div", { class: "rules" },
+      h("p", {}, h("b", {}, "Скорость решает. "), "Ответил в первую треть времени: мощный удар (×1,4). Во вторую: сильный. В последнюю: лёгкий (×0,6)."),
+      h("p", {}, h("b", {}, "Защита. "), "Если враг бьёт вплотную, защитник отвечает на задание той же сложности. Очень быстро: уворот и контратака. Средне: уворот. Медленно: урон на 20% меньше. Не ответил: полный урон."),
+      h("p", { class: "note" }, Object.entries(TIERS).map(([k, t]) => `${"★".repeat(+k)} ${t.what}`).join(" · "))),
+    h("div", {}, h("p", { class: "label", style: "margin-bottom:6px" }, "Сила компьютера"),
+      h("div", { class: "chips" }, Object.entries(BOT_LEVELS).map(([k, L]) => h("button", { class: "chip", "aria-pressed": lvl === k ? "true" : "false",
+        onclick: () => { state.botLevel = k; save(); renderBattle(); } }, L.name)))),
+    h("div", { class: "row split" },
+      h("button", { class: "btn", onclick: () => { sfx("ok"); newGame("bot"); } }, "Против компьютера"),
+      h("button", { class: "btn ghost", onclick: () => { sfx("ok"); newGame("duo"); } }, "Вдвоём на одном экране")));
+}
+function buildArena(v) {
+  v.dataset.game = G.id; G.nodes = {};
+  const board = h("div", { class: "board", id: "board" });
+  for (let y = 0; y < ROWS; y++) for (let x = 0; x < COLS; x++)
+    board.append(h("button", { class: "cell" + ((x + y) % 2 ? " dark" : ""), type: "button", "data-x": x, "data-y": y, "aria-label": `Клетка ${x + 1}, ${y + 1}` }));
+  board.append(h("div", { class: "units", id: "units" }));
+  board.addEventListener("click", e => { const c = e.target.closest(".cell"); if (c) cellClick(+c.dataset.x, +c.dataset.y); });
+  v.replaceChildren(h("div", { class: "arena" }, h("div", { class: "turnbar", id: "turnbar" }), board, h("div", { class: "panel", id: "bpanel" })));
+}
+function drawBoard() {
+  const sel = G.sel && selected(), act = G.phase === "act";
+  const tgCells = new Set(act ? [...G.targets.values()].map(({ e }) => e.x + "," + e.y) : []);
+  for (const c of document.querySelectorAll("#board .cell")) {
+    const x = +c.dataset.x, y = +c.dataset.y, k = x + "," + y, u = unitAt(x, y);
+    c.classList.toggle("mine", G.phase === "select" && human(G.turn) && !!u && u.side === G.turn);
+    c.classList.toggle("move", act && G.cells.has(k) && !u);
+    c.classList.toggle("target", tgCells.has(k));
+    c.classList.toggle("sel", !!sel && sel.x === x && sel.y === y);
+  }
+  const layer = $("#units"), guardId = G.task && G.task.role === "defend" && !G.task.done ? G.task.defender : null;
+  for (const u of G.units) {
+    let n = G.nodes[u.id];
+    if (!n) {
+      const t = UNIT_TYPES[u.type];
+      n = h("div", { class: "unit " + u.side + (t.flip ? " flip" : "") }, h("span", { class: "base" }), h("span", { class: "body" }, h("span", { class: "sprite" }, t.icon)),
+        h("span", { class: "hp" }, h("i")), h("span", { class: "stars" }, "★".repeat(t.tier)));
+      G.nodes[u.id] = n; layer.append(n);
+    }
+    n.style.left = u.x / COLS * 100 + "%"; n.style.top = u.y / ROWS * 100 + "%";
+    const pct = Math.max(0, u.hp / UNIT_TYPES[u.type].hp * 100), bar = n.querySelector(".hp i");
+    bar.style.width = pct + "%"; bar.classList.toggle("low", pct < 35);
+    n.classList.toggle("active", u.id === G.sel || u.id === guardId);
+    n.classList.toggle("dead", u.hp <= 0);
+  }
+  $("#turnbar").replaceChildren(
+    h("span", { class: "side-tag " + G.turn }, h("i"), G.phase === "over" ? "Битва окончена" : `Ходят ${SIDE[G.turn].toLowerCase()}` + (G.mode === "bot" && G.turn === "red" ? " (компьютер)" : "")),
+    h("span", { class: "progress-line" }, `Синие: ${alive("blue").length} · Красные: ${alive("red").length}`),
+    h("div", { class: "row", style: "gap:6px" },
+      h("button", { class: "btn ghost", style: "padding:6px 12px", onclick: () => { state.sound = state.sound === false; save(); drawBoard(); } }, state.sound === false ? "Звук выкл" : "Звук вкл"),
+      h("button", { class: "btn ghost", style: "padding:6px 12px", onclick: () => { clearInterval(G.timer); G = null; renderBattle(); } }, "Новая игра")));
+}
+function unitCard(u) {
+  const t = UNIT_TYPES[u.type];
+  return h("div", { class: "unitcard" }, h("span", { class: "big", style: (u.side === "red") !== !!t.flip ? "transform:scaleX(-1)" : "" }, t.icon),
+    h("div", {}, h("b", {}, `${t.name} ${"★".repeat(t.tier)}`), h("div", { class: "statrow" },
+      h("span", {}, "Здоровье ", h("b", {}, `${u.hp}/${t.hp}`)), h("span", {}, "Урон ", h("b", {}, `${t.dmg[0]}–${t.dmg[1]}`)),
+      h("span", {}, "Ход ", h("b", {}, t.move + (t.fly ? ", летает" : ""))),
+      h("span", {}, "Атака ", h("b", {}, t.range > 1 ? `издалека, до ${t.range} клеток` : "вплотную")))));
+}
+function drawPanel() {
+  const p = $("#bpanel"); p.replaceChildren();
+  const u = G.sel && selected(), t = u && UNIT_TYPES[u.type];
+  if (G.phase === "over") {
+    const win = alive("blue").length ? "blue" : "red";
+    p.append(h("div", { class: "empty" },
+      h("h2", {}, G.mode === "bot" ? (win === "blue" ? "Победа! Армия противника разбита" : "Поражение. Компьютер победил") : `Победили ${SIDE[win].toLowerCase()}!`),
+      h("p", { class: "muted" }, `Верных ответов: синие ${G.score.blue}, красные ${G.score.red}.`),
+      h("button", { class: "btn", onclick: () => newGame(G.mode) }, "Сыграть ещё")));
+  } else if (G.phase === "bot") {
+    p.append(h("p", { class: "label" }, "Ход компьютера"), h("p", {}, G.msg));
+  } else if (G.phase === "anim") {
+    p.append(h("p", {}, G.msg || (u ? `${t.name} действует…` : "…")));
+  } else if (G.phase === "select") {
+    if (!u) p.append(h("p", {}, h("b", {}, `${SIDE[G.turn]}, ваш ход. `), "Нажми на своего солдата."),
+      h("p", { class: "note" }, "★ лёгкое задание, ★★ среднее, ★★★ сложное. Отвечай быстрее, чтобы удар был мощнее."));
+    else p.append(unitCard(u), h("p", { class: "note" }, `Задание ${TIERS[t.tier].name}: ${TIERS[t.tier].what}. Время: ${TIERS[t.tier].time} сек. Быстрый ответ даёт мощный удар.`),
+      h("div", { class: "row" }, h("button", { class: "btn", onclick: startTask }, "Принять задание"),
+        h("button", { class: "btn ghost", onclick: () => { G.sel = null; drawBoard(); drawPanel(); } }, "Выбрать другого")));
+  } else if (G.phase === "task" || G.phase === "defend") {
+    p.append(taskView(G.task));
+  } else if (G.phase === "fail") {
+    const q = G.task.p;
+    p.append(h("p", { class: "feedback no" }, G.task.timeout ? "Время вышло! Солдат пропускает ход." : "Неверно. Солдат пропускает ход."),
+      h("p", { class: "label" }, "Правильно"), h("p", { style: "font-family:var(--display);font-size:1.15rem" }, q.en), tr(q), h("p", { class: "muted" }, q.ru),
+      h("div", { class: "row" }, speakBtn(q.en), h("button", { class: "btn", onclick: endTurn }, "Дальше")));
+  } else if (G.phase === "act") {
+    const pw = POWER[G.power], can = G.targets.size > 0 || [...G.cells.keys()].some(k => { const [x, y] = k.split(",").map(Number); return !unitAt(x, y); });
+    p.append(h("p", { class: "feedback ok" }, `Верно! ${pw.name} (×${String(pw.k).replace(".", ",")}).`),
+      h("p", {}, can ? "Нажми на врага в красной рамке, чтобы атаковать, или на зелёную точку, чтобы походить. Если бьёшь вплотную, враг может защититься." : "Но ходить некуда."),
+      h("div", { class: "row" }, speakBtn(G.task.p.en), h("button", { class: "btn ghost", onclick: endTurn }, "Пропустить ход")));
+  }
+}
+function cellClick(x, y) {
+  if (!G || G.busy || !human(G.turn)) return;
+  const u = unitAt(x, y);
+  if (G.phase === "select") { if (u && u.side === G.turn) { G.sel = u.id; drawBoard(); drawPanel(); } return; }
+  if (G.phase === "act") {
+    const me = selected();
+    if (u && G.targets.has(u.id)) attack(me, G.targets.get(u.id));
+    else if (!u && G.cells.has(x + "," + y)) { const game = G; moveTo(me, x, y).then(() => { if (G === game) endTurn(); }); }
+  }
+}
+
+// ---- English tasks with a timer; speed of the answer is reported as fast / mid / slow ----
+function makeTask(tier) {
+  const pool = active(), p = shuffle(pool)[0];
+  if (tier === 1) return { tier, kind: "pick", p, field: "ru", opts: shuffle([p, ...distractors(p, 3, "ru")]) };
+  if (tier === 2) return { tier, kind: "pick", p, field: "en", opts: shuffle([p, ...distractors(p, 3, "en")]) };
+  if (SR && !micBlocked && Math.random() < 0.5) return { tier, kind: "say", p };
+  const q = shuffle(pool.filter(x => x.en.split(" ").length >= 3))[0] || p;
+  return { tier, kind: "build", p: q, pool: shuffle(q.en.split(" ").map((w, i) => ({ w, i }))), line: [] };
+}
+function runTask(task, onDone) {
+  task.start = Date.now(); task.end = task.start + TIERS[task.tier].time * 1000; task.onDone = onDone;
+  G.task = task; drawBoard(); drawPanel();
+  if (task.kind === "pick" && task.field === "ru") speak(task.p.en);
+  clearInterval(G.timer);
+  G.timer = setInterval(() => {
+    if (!G || G.task !== task || task.done) return;
+    const left = task.end - Date.now(), bar = $("#task-timer"), txt = $("#task-left"), zone = $("#task-zone");
+    if (bar) bar.style.width = Math.max(0, left / (task.end - task.start) * 100) + "%";
+    if (txt) txt.textContent = Math.max(0, Math.ceil(left / 1000)) + " сек";
+    if (zone) zone.textContent = zoneText(task);
+    if (left <= 0) finishTask(false);
+  }, 200);
+}
+function zoneText(t) {
+  const s = speedOf((Date.now() - t.start) / (t.end - t.start));
+  return "сейчас: " + (t.role === "defend" ? GUARD_TEXT[s] : POWER[s].name.toLowerCase());
+}
+function finishTask(ok, at = Date.now()) {
+  const t = G && G.task; if (!t || t.done) return;
+  t.done = true; clearInterval(G.timer);
+  t.timeout = !ok && at >= t.end;
+  if (ok) { G.score[t.side]++; activity(); } else miss(t.p);
+  t.onDone(ok, ok ? speedOf((at - t.start) / (t.end - t.start)) : null);
+}
+function taskView(t) {
+  const left = Math.max(0, t.end - Date.now());
+  const wrap = h("div", { style: "display:flex;flex-direction:column;gap:12px" });
+  if (t.role === "defend") {
+    const d = unitById(t.defender), a = unitById(t.attacker);
+    wrap.append(h("div", { class: "guard" },
+      h("b", {}, `Защита! ${SIDE[d.side]}: на вашего ${ACC[d.type]} нападает ${UNIT_TYPES[a.type].name.toLowerCase()}.`),
+      h("span", { class: "note" }, "Очень быстро: уворот и контратака. Средне: уворот. Медленно: урон на 20% меньше. Не ответишь: полный урон.")));
+  }
+  wrap.append(
+    h("div", { class: "card-top" }, h("span", { class: "label" }, `Задание ${"★".repeat(t.tier)} ${TIERS[t.tier].name}`),
+      h("span", { class: "row", style: "gap:10px" }, h("span", { class: "progress-line", id: "task-zone" }, zoneText(t)), h("span", { class: "progress-line", id: "task-left" }, Math.ceil(left / 1000) + " сек"))),
+    h("div", { class: "bar timer" }, h("i", { id: "task-timer", style: `width:${left / (t.end - t.start) * 100}%` })),
+    ...taskBody(t, (ok, at) => { if (G && G.task === t) finishTask(ok, at); }, drawPanel),
+    h("button", { class: "btn ghost", onclick: () => finishTask(false) }, t.role === "defend" ? "Не знаю (получить полный урон)" : "Не знаю (пропустить ход)"));
+  return wrap;
+}
+// The question part of any game task. finish(ok, answeredAt) reports the result; rerender redraws after word-chip moves.
+function taskBody(t, finish, rerender) {
+  const p = t.p;
+  if (t.kind === "pick") return [
+    ...(t.field === "ru"
+      ? [h("p", { class: "label" }, "Что это значит?"), h("p", { class: "prompt en" }, p.en), tr(p), h("div", { class: "row" }, speakBtn(p.en), speakBtn(p.en, "Медленно", true))]
+      : [h("p", { class: "label" }, "Как сказать по-английски?"), h("p", { class: "prompt" }, p.ru)]),
+    h("div", { class: "opts" }, t.opts.map(o => h("button", { class: "opt", onclick: () => finish(o.id === p.id) }, o[t.field])))];
+  if (t.kind === "build") {
+    const chip = (x, from) => h("button", { class: "wordchip", onclick: () => {
+      if (from === "pool") { t.pool = t.pool.filter(y => y !== x); t.line.push(x); } else { t.line = t.line.filter(y => y !== x); t.pool.push(x); }
+      rerender(); } }, x.w);
+    return [h("p", { class: "label" }, "Собери по-английски"), h("p", { class: "prompt" }, p.ru),
+      h("div", { class: "build" }, t.line.length ? t.line.map(x => chip(x, "line")) : h("span", { class: "muted" }, "Нажимай на слова ниже")),
+      h("div", { class: "chips" }, t.pool.map(x => chip(x, "pool"))),
+      h("button", { class: "btn", disabled: t.pool.length > 0, onclick: () => finish(normPhrase(t.line.map(x => x.w).join(" ")) === normPhrase(p.en)) }, "Проверить")];
+  }
+  return [h("p", { class: "label" }, "Произнеси фразу, нужно 75% и больше"), h("p", { class: "prompt" }, p.ru),
+    pronounce(p, score => { if (!t.done && score >= 75) { const at = Date.now(); setTimeout(() => finish(true, at), 700); } })];
+}
+function startTask() {
+  const u = selected(), task = makeTask(UNIT_TYPES[u.type].tier);
+  task.role = "attack"; task.side = G.turn; G.phase = "task";
+  runTask(task, (ok, speed) => {
+    if (ok) { G.power = speed; G.cells = reach(u); G.targets = targets(u, G.cells); G.phase = "act"; sfx("ok"); speak(task.p.en); }
+    else { G.phase = "fail"; sfx("fail"); }
+    drawBoard(); drawPanel();
+  });
+}
+
+// ---- Moves, blows and defence ----
+function replay(node, cls, ms) { node.classList.remove(cls); void node.offsetWidth; node.classList.add(cls); setTimeout(() => node.classList.remove(cls), ms); }
+function float(u, text, cls = "") {
+  const fx = h("div", { class: "dmg " + cls, style: `left:${(u.x + .5) / COLS * 100}%;top:${(u.y + .3) / ROWS * 100}%` }, text);
+  $("#units").append(fx); setTimeout(() => fx.remove(), 1000);
+}
+async function moveTo(u, x, y) {
+  G.busy = true; G.phase = "anim"; G.msg = ""; u.x = x; u.y = y; drawBoard(); drawPanel();
+  await wait(480); G.busy = false;
+}
+// One blow with animation and sound. dmg 0 = the target dodges.
+async function strike(a, d, dmg, heavy) {
+  const at = UNIT_TYPES[a.type], an = G.nodes[a.id], dn = G.nodes[d.id];
+  an.style.setProperty("--dx", (d.x > a.x ? 25 : d.x < a.x ? -25 : 0) + "%");
+  replay(an, "lunge", 420);
+  if (at.range > 1 && cheb(a, d) > 1) {
+    sfx(a.type === "mage" ? "magic" : "arrow");
+    const bolt = h("div", { class: "bolt" + (a.type === "mage" ? " magic" : ""), style: `left:${(a.x + .5) / COLS * 100}%;top:${(a.y + .5) / ROWS * 100}%` });
+    $("#units").append(bolt); void bolt.offsetWidth;
+    bolt.style.left = (d.x + .5) / COLS * 100 + "%"; bolt.style.top = (d.y + .5) / ROWS * 100 + "%";
+    await wait(380); bolt.remove();
+  } else { sfx("swing"); await wait(200); }
+  if (!dmg) { replay(dn, "dodge", 470); sfx("dodge"); float(d, "Уворот!", "info"); await wait(600); return; }
+  d.hp = Math.max(0, d.hp - dmg);
+  replay(dn, "hit", 470); sfx(heavy ? "heavy" : "hit");
+  float(d, "−" + dmg, heavy ? "big" : "");
+  drawBoard();
+  if (d.hp <= 0) { await wait(250); sfx("death"); }
+  await wait(d.hp <= 0 ? 700 : 600);
+}
+// The target of a close blow answers a task of the same tier. Returns "counter" | "dodge" | "graze" | "hit".
+async function defend(d, a, tier) {
+  const game = G, dt = UNIT_TYPES[d.type];
+  if (human(d.side)) {
+    const task = makeTask(tier); task.role = "defend"; task.side = d.side; task.defender = d.id; task.attacker = a.id;
+    G.phase = "defend"; G.busy = false;
+    const res = await new Promise(resolve => runTask(task, (ok, speed) => resolve({ ok, speed })));
+    if (G !== game) return "hit";
+    G.busy = true; G.phase = "anim";
+    if (res.ok) { G.msg = `Верно! ${GUARD_TEXT[res.speed][0].toUpperCase() + GUARD_TEXT[res.speed].slice(1)}.`; sfx("ok"); drawBoard(); drawPanel(); await wait(900); }
+    else { G.msg = `${task.timeout ? "Время вышло" : "Неверно"}: полный урон. Правильно: «${task.p.en}» (${task.p.ru}).`; sfx("fail"); drawBoard(); drawPanel(); speak(task.p.en); await wait(2400); }
+    return res.ok ? GUARD[res.speed] : "hit";
+  }
+  G.phase = "bot"; G.msg = `${dt.name} защищается: отвечает на ${TIERS[tier].name} задание…`; drawBoard(); drawPanel();
+  await wait(1300); if (G !== game) return "hit";
+  const r = botAnswer(tier), p = shuffle(active())[0];
+  if (r.ok) G.score[d.side]++;
+  G.msg = (r.ok ? `Ответил ${{ fast: "очень быстро", mid: "быстро", slow: "медленно" }[r.speed]}: ${GUARD_TEXT[r.speed]}.` : "Не ответил: получает полный урон.") + ` «${p.ru}» = «${p.en}»`;
+  drawPanel(); await wait(1800);
+  return r.ok ? GUARD[r.speed] : "hit";
+}
+async function attack(u, { e, from }) {
+  const game = G, t = UNIT_TYPES[u.type];
+  if (from.x !== u.x || from.y !== u.y) { await moveTo(u, from.x, from.y); if (G !== game) return; }
+  G.busy = true;
+  const guard = cheb(u, e) === 1 ? await defend(e, u, t.tier) : "hit";
+  if (G !== game) return;
+  const power = POWER[G.power || "mid"], base = rnd(t.dmg[0], t.dmg[1]) * power.k;
+  G.phase = "anim"; G.msg = `${t.name}: ${power.name.toLowerCase()}!`; drawBoard(); drawPanel();
+  if (power.k > 1.2) { float(u, "Мощный!", "info"); await wait(350); }
+  await strike(u, e, guard === "hit" ? Math.round(base) : guard === "graze" ? Math.round(base * 0.8) : 0, power.k > 1.2);
+  if (G !== game) return;
+  if (guard === "counter" && e.hp > 0 && u.hp > 0) {
+    G.msg = `${UNIT_TYPES[e.type].name} контратакует!`; drawPanel();
+    float(e, "Контратака!", "info"); await wait(550); if (G !== game) return;
+    const et = UNIT_TYPES[e.type];
+    await strike(e, u, rnd(et.dmg[0], et.dmg[1]), false);
+    if (G !== game) return;
+  }
+  G.busy = false; endTurn();
+}
+function endTurn() {
+  if (!G) return;
+  clearInterval(G.timer);
+  G.sel = null; G.task = null; G.cells = null; G.targets = null; G.power = null; G.msg = ""; G.busy = false;
+  if (!alive("blue").length || !alive("red").length) {
+    G.phase = "over"; sfx(G.mode === "bot" && !alive("blue").length ? "fail" : "win"); drawBoard(); drawPanel(); return;
+  }
+  G.turn = G.turn === "blue" ? "red" : "blue"; G.phase = "select";
+  drawBoard(); drawPanel();
+  if (!human(G.turn)) botTurn();
+}
+// Computer: picks the unit with the best expected damage; its answers are simulated by the chosen strength.
+async function botTurn() {
+  const game = G, L = botLevel(); G.phase = "bot"; G.busy = true;
+  const plan = alive("red").map(u => {
+    const t = UNIT_TYPES[u.type], cells = reach(u), best = [...targets(u, cells).values()].sort((a, b) => a.e.hp - b.e.hp)[0];
+    const avg = (t.dmg[0] + t.dmg[1]) / 2;
+    const value = best ? avg * L.ok[t.tier] * (best.e.hp <= avg ? 1.6 : 1) : 2 + t.move;
+    return { u, t, cells, best, value: value * (0.8 + Math.random() * 0.4) };
+  }).sort((a, b) => b.value - a.value)[0];
+  G.sel = plan.u.id; G.msg = `${plan.t.name} ${"★".repeat(plan.t.tier)} берёт ${TIERS[plan.t.tier].name} задание…`;
+  drawBoard(); drawPanel();
+  await wait(1400); if (G !== game) return;
+  const p = shuffle(active())[0], r = botAnswer(plan.t.tier);
+  if (r.ok) G.score.red++;
+  G.msg = (r.ok ? `Ответил ${{ fast: "очень быстро", mid: "вовремя", slow: "медленно" }[r.speed]}: ${POWER[r.speed].name.toLowerCase()}. ` : "Ошибся и пропускает ход. Правильно было: ") + `«${p.ru}» = «${p.en}»`;
+  drawPanel();
+  await wait(r.ok ? 1700 : 2400); if (G !== game) return;
+  G.busy = false;
+  if (!r.ok) return endTurn();
+  G.power = r.speed;
+  if (plan.best) return attack(plan.u, plan.best);
+  const foes = alive("blue"); let goal = null;
+  for (const k of plan.cells.keys()) {
+    const [x, y] = k.split(",").map(Number), d = Math.min(...foes.map(f => cheb({ x, y }, f)));
+    if (!goal || d < goal.d) goal = { x, y, d };
+  }
+  if (goal && (goal.x !== plan.u.x || goal.y !== plan.u.y)) { await moveTo(plan.u, goal.x, goal.y); if (G !== game) return; }
+  endTurn();
+}
+
+// ---------- Towers: tower defence; tower upgrades and the hero grow through English tasks ----------
+const TD_COLS = 12, TD_ROWS = 8, TS = 80; // canvas is 960×640, one tile = 80 px
+const TD_WAY = [[-1, 1], [3, 1], [3, 5], [7, 5], [7, 2], [10, 2], [10, 6], [11, 6]]; // road corners; the castle stands on the last one
+const TD_PATH = new Set();
+for (let i = 1; i < TD_WAY.length; i++) {
+  let [x, y] = TD_WAY[i - 1]; const [x2, y2] = TD_WAY[i];
+  while (x !== x2 || y !== y2) { if (x >= 0) TD_PATH.add(x + "," + y); x += Math.sign(x2 - x); y += Math.sign(y2 - y); }
+  TD_PATH.add(x2 + "," + y2);
+}
+const TD_LEN = TD_WAY.slice(1).reduce((s, [x, y], i) => s + Math.abs(x - TD_WAY[i][0]) + Math.abs(y - TD_WAY[i][1]), 0);
+function pathPos(d) {
+  for (let i = 1; i < TD_WAY.length; i++) {
+    const [ax, ay] = TD_WAY[i - 1], [bx, by] = TD_WAY[i], len = Math.abs(bx - ax) + Math.abs(by - ay);
+    if (d <= len) return { x: ax + Math.sign(bx - ax) * d + 0.5, y: ay + Math.sign(by - ay) * d + 0.5 };
+    d -= len;
+  }
+  const [x, y] = TD_WAY[TD_WAY.length - 1]; return { x: x + 0.5, y: y + 0.5 };
+}
+const TOWERS = {
+  arrow:  { name: "Лучники", icon: "🏹", cost: 50,  tier: 1, dmg: 9,  range: 2.6, rate: 0.7, color: "#6F9A3A", note: "быстро стреляют" },
+  cannon: { name: "Пушка",   icon: "💣", cost: 90,  tier: 2, dmg: 24, range: 2.2, rate: 1.6, splash: 0.9, color: "#5E636D", note: "бьёт по группе" },
+  mage:   { name: "Маги",    icon: "🔮", cost: 130, tier: 3, dmg: 30, range: 2.9, rate: 1.2, color: "#7656C4", note: "сильно бьют и замедляют" }
+};
+const TD_MAX_LVL = 4, TD_WAVES = 10, TD_LIVES = 15;
+// Difficulty: enemy health, how many enemies, and how much stronger each wave gets.
+const TD_LEVELS = {
+  normal: { name: "Обычная",  hp: 1,    count: 1,   grow: 0.22 },
+  hard:   { name: "Тяжёлая",  hp: 1.45, count: 1.3, grow: 0.32 },
+  insane: { name: "Безумная", hp: 1.8,  count: 1.4, grow: 0.42 }
+};
+const tdLevel = () => TD_LEVELS[TD && TD.lvl] || TD_LEVELS.hard;
+const towerStats = t => { const b = TOWERS[t.type], k = t.level - 1; return { dmg: Math.round(b.dmg * (1 + 0.7 * k)), range: b.range + 0.3 * k, rate: b.rate * Math.pow(0.85, k) }; };
+const upTier = t => Math.min(3, TOWERS[t.type].tier + t.level - 1); // stronger tower → harder English
+const ENEMIES = {
+  goblin: { icon: "👺", hp: 60,   speed: 1.1,  reward: 2,  harm: 1 },
+  wolf:   { icon: "🐺", hp: 42,   speed: 1.9,  reward: 3,  harm: 1 },
+  ogre:   { icon: "👹", hp: 255,  speed: 0.65, reward: 8,  harm: 2 },
+  boss:   { icon: "💀", hp: 1100, speed: 0.55, reward: 36, harm: 5 }
+};
+const heroStats = lv => ({ dmg: 6 + 4 * lv, speed: 2.6 + 0.15 * lv, range: 1.2, rate: Math.max(0.3, 0.7 - 0.03 * lv) });
+const heroTier = lv => lv <= 3 ? 1 : lv <= 6 ? 2 : 3;
+const EMOJI_FONT = '"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif';
+let TD = null;
+
+function waveList(n) {
+  const L = [], c = 1 + (tdLevel().count - 1) * Math.min(1, n / 4), add = (type, k) => { for (let i = 0; i < Math.round(k * c); i++) L.push(type); };
+  add("goblin", 4 + 2 * n); if (n >= 2) add("wolf", 1 + n); if (n >= 3) add("ogre", Math.floor(n / 2));
+  const list = shuffle(L); if (n === 5 || n === 10) list.push(...Array(n === 10 ? 2 : 1).fill("boss"));
+  return list;
+}
+function tdNew() {
+  if (TD) clearInterval(TD.timer);
+  TD = { lvl: state.tdLevel in TD_LEVELS ? state.tdLevel : "hard", lives: TD_LIVES, coins: 120, wave: 0, waveOn: false, waveCd: 15, queue: [], spawnCd: 0, enemies: [], towers: [], shots: [], fx: [], time: 0,
+    hero: { x: 5.5, y: 3.5, tx: 5.5, ty: 3.5, level: 1, cd: 0 }, build: null, sel: null, task: null, over: null, msg: "", answers: 0 };
+  renderTowers();
+  const game = TD; requestAnimationFrame(ts => { game.last = ts; tdLoop(ts, game); });
+}
+function tdLoop(ts, game) {
+  if (TD !== game) return;
+  const dt = Math.min(0.05, (ts - game.last) / 1000); game.last = ts;
+  if (!TD.over && current === "towers" && !document.hidden) tdUpdate(dt); // never pauses, even during tasks
+  if (current === "towers") { tdDraw(); tdHud(); }
+  requestAnimationFrame(t => tdLoop(t, game));
+}
+const sfxLast = {};
+// Battle sounds stay quiet while a task is open, so the English audio is easy to hear.
+function tdSfx(kind) { if (TD && TD.task && !TD.task.done) return; const now = performance.now(); if (now - (sfxLast[kind] || 0) < 90) return; sfxLast[kind] = now; sfx(kind); }
+function tdHit(e, dmg) {
+  if (e.hp <= 0) return;
+  e.hp -= dmg;
+  if (e.hp <= 0) { const r = ENEMIES[e.type].reward, p = pathPos(e.d); TD.coins += r; TD.fx.push({ kind: "text", text: "+" + r, x: p.x, y: p.y, t: 0.9 }); tdSfx("coin"); }
+}
+function tdUpdate(dt) {
+  TD.time += dt;
+  TD.castleHit = Math.max(0, (TD.castleHit || 0) - dt);
+  if (!TD.waveOn && TD.wave < TD_WAVES && (TD.waveCd -= dt) <= 0) tdStartWave();
+  if (TD.queue.length && (TD.spawnCd -= dt) <= 0) {
+    const L = tdLevel(), type = TD.queue.shift(), k = (1 + L.grow * (TD.wave - 1)) * (1 + (L.hp - 1) * Math.min(1, TD.wave / 4)), hp = Math.round(ENEMIES[type].hp * k);
+    TD.enemies.push({ type, hp, max: hp, d: 0, slow: 0 }); TD.spawnCd = type === "boss" ? 2 : 0.75 / Math.sqrt(L.count);
+  }
+  for (const e of TD.enemies) {
+    e.d += ENEMIES[e.type].speed * (e.slow > 0 ? 0.5 : 1) * dt; e.slow -= dt;
+    if (e.d >= TD_LEN && e.hp > 0) {
+      e.gone = true; TD.lives -= ENEMIES[e.type].harm; tdSfx("fail");
+      TD.fx.push({ kind: "text", text: "−" + ENEMIES[e.type].harm, x: 11.5, y: 6.1, t: 0.9, red: true }); TD.castleHit = 0.45;
+    }
+  }
+  for (const t of TD.towers) {
+    if ((t.cd -= dt) > 0) continue;
+    const s = towerStats(t), cx = t.x + 0.5, cy = t.y + 0.5;
+    let best = null;
+    for (const e of TD.enemies) { if (e.gone || e.hp <= 0) continue; const p = pathPos(e.d); if (Math.hypot(p.x - cx, p.y - cy) <= s.range && (!best || e.d > best.d)) best = e; }
+    if (best) { t.cd = s.rate; TD.shots.push({ x: cx, y: cy, target: best, dmg: s.dmg, kind: t.type, speed: t.type === "cannon" ? 6 : 9 }); tdSfx(t.type === "arrow" ? "arrow" : t.type === "cannon" ? "swing" : "magic"); }
+  }
+  const H = TD.hero, hs = heroStats(H.level), dx = H.tx - H.x, dy = H.ty - H.y, dist = Math.hypot(dx, dy);
+  if (dist > 0.05) { const st = Math.min(dist, hs.speed * dt); H.x += dx / dist * st; H.y += dy / dist * st; H.face = dx < 0 ? -1 : 1; }
+  if ((H.cd -= dt) <= 0) {
+    let best = null, bd = 1e9;
+    for (const e of TD.enemies) { if (e.gone || e.hp <= 0) continue; const p = pathPos(e.d), d = Math.hypot(p.x - H.x, p.y - H.y); if (d <= hs.range && d < bd) { best = e; bd = d; } }
+    if (best) { H.cd = hs.rate; const p = pathPos(best.d); tdHit(best, hs.dmg); TD.fx.push({ kind: "slash", x: p.x, y: p.y, t: 0.25 }); tdSfx("hit"); }
+  }
+  for (const s of TD.shots) {
+    const e = s.target; if (e.gone || e.hp <= 0) { s.done = true; continue; }
+    const p = pathPos(e.d), dx = p.x - s.x, dy = p.y - s.y, d = Math.hypot(dx, dy), st = s.speed * dt;
+    if (d > st) { s.x += dx / d * st; s.y += dy / d * st; continue; }
+    s.done = true;
+    if (s.kind === "cannon") {
+      for (const o of TD.enemies) { if (o.gone || o.hp <= 0) continue; const q = pathPos(o.d); if (Math.hypot(q.x - p.x, q.y - p.y) <= TOWERS.cannon.splash) tdHit(o, s.dmg); }
+      TD.fx.push({ kind: "boom", x: p.x, y: p.y, t: 0.35 }); tdSfx("heavy");
+    } else { tdHit(e, s.dmg); if (s.kind === "mage") e.slow = 1.5; }
+  }
+  TD.shots = TD.shots.filter(s => !s.done);
+  TD.enemies = TD.enemies.filter(e => !e.gone && e.hp > 0);
+  for (const f of TD.fx) f.t -= dt;
+  TD.fx = TD.fx.filter(f => f.t > 0);
+  if (TD.lives <= 0) { TD.lives = 0; TD.over = "lose"; sfx("fail"); tdPanel(); }
+  else if (TD.waveOn && !TD.queue.length && !TD.enemies.length) {
+    TD.waveOn = false; TD.waveCd = 8; const bonus = 15 + 5 * TD.wave; TD.coins += bonus;
+    TD.msg = `Волна ${TD.wave} отбита! Бонус +${bonus} монет.`;
+    if (TD.wave >= TD_WAVES) { TD.over = "win"; sfx("win"); } else sfx("ok");
+    tdPanel();
+  }
+}
+
+function tdDraw() {
+  const cv = $("#td-canvas"); if (!cv) return;
+  const c = cv.getContext("2d"), cs = getComputedStyle(document.documentElement), col = n => cs.getPropertyValue(n).trim();
+  const emoji = (ch, x, y, size, flip) => {
+    c.save(); c.translate(x * TS, y * TS); if (flip) c.scale(-1, 1);
+    c.font = `${size * TS}px ${EMOJI_FONT}`; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText(ch, 0, 0); c.restore();
+  };
+  for (let y = 0; y < TD_ROWS; y++) for (let x = 0; x < TD_COLS; x++) {
+    c.fillStyle = TD_PATH.has(x + "," + y) ? col("--path") : (x + y) % 2 ? col("--board-b") : col("--board-a");
+    c.fillRect(x * TS, y * TS, TS, TS);
+  }
+  if (TD.build) {
+    c.fillStyle = "rgba(255,255,255,.45)";
+    for (let y = 0; y < TD_ROWS; y++) for (let x = 0; x < TD_COLS; x++)
+      if (!TD_PATH.has(x + "," + y) && !TD.towers.some(t => t.x === x && t.y === y)) { c.beginPath(); c.arc((x + .5) * TS, (y + .5) * TS, 7, 0, 7); c.fill(); }
+  }
+  // Castle: shakes and flashes red when an enemy breaks through; its health bar sits above it.
+  const hit = TD.castleHit || 0;
+  if (hit) { c.fillStyle = `rgba(240,90,67,${hit})`; c.beginPath(); c.arc(11.5 * TS, 6.5 * TS, TS * 0.5, 0, 7); c.fill(); }
+  emoji("🏰", 11.5 + (hit ? Math.sin(TD.time * 80) * 0.05 : 0), 6.45, 0.8);
+  const lw = TS * 1.9, lx = cv.width - lw - 6, ly = 7.12 * TS, frac = Math.max(0, TD.lives / TD_LIVES);
+  c.fillStyle = "rgba(0,0,0,.6)"; c.beginPath(); c.roundRect(lx, ly, lw, 34, 9); c.fill();
+  c.fillStyle = frac < 0.35 ? "#F05A43" : frac < 0.7 ? "#F2B44C" : "#4FC26E"; c.beginPath(); c.roundRect(lx + 4, ly + 4, (lw - 8) * frac, 26, 6); c.fill();
+  c.fillStyle = "#fff"; c.font = "700 19px system-ui, sans-serif"; c.textAlign = "center"; c.textBaseline = "middle";
+  c.fillText(`Замок ❤ ${TD.lives}/${TD_LIVES}`, lx + lw / 2, ly + 17.5);
+  if (TD.sel) {
+    const s = towerStats(TD.sel);
+    c.fillStyle = "rgba(255,255,255,.12)"; c.strokeStyle = "rgba(255,255,255,.7)"; c.lineWidth = 2;
+    c.beginPath(); c.arc((TD.sel.x + .5) * TS, (TD.sel.y + .5) * TS, s.range * TS, 0, 7); c.fill(); c.stroke();
+  }
+  for (const t of TD.towers) {
+    c.fillStyle = TOWERS[t.type].color; c.beginPath(); c.roundRect(t.x * TS + 8, t.y * TS + 8, TS - 16, TS - 16, 14); c.fill();
+    if (t === TD.sel) { c.strokeStyle = col("--sun"); c.lineWidth = 4; c.stroke(); }
+    emoji(TOWERS[t.type].icon, t.x + .5, t.y + .45, 0.48);
+    c.fillStyle = "#FFD34D"; c.font = `600 14px ${EMOJI_FONT}`; c.textAlign = "center"; c.fillText("★".repeat(t.level), (t.x + .5) * TS, t.y * TS + TS - 14);
+  }
+  for (const e of [...TD.enemies].sort((a, b) => a.d - b.d)) {
+    const p = pathPos(e.d), big = e.type === "boss" ? 0.7 : e.type === "ogre" ? 0.6 : 0.5;
+    if (e.slow > 0) { c.fillStyle = "rgba(150,120,255,.35)"; c.beginPath(); c.arc(p.x * TS, p.y * TS, TS * 0.32, 0, 7); c.fill(); }
+    emoji(ENEMIES[e.type].icon, p.x, p.y + Math.sin(TD.time * 10 + e.d * 3) * 0.03, big);
+    const w = TS * 0.6; c.fillStyle = "rgba(0,0,0,.45)"; c.fillRect(p.x * TS - w / 2, p.y * TS - TS * 0.42, w, 6);
+    c.fillStyle = e.hp / e.max < 0.35 ? "#F05A43" : "#4FC26E"; c.fillRect(p.x * TS - w / 2, p.y * TS - TS * 0.42, w * Math.max(0, e.hp / e.max), 6);
+  }
+  const H = TD.hero;
+  c.fillStyle = "rgba(242,180,76,.35)"; c.beginPath(); c.ellipse(H.x * TS, (H.y + .28) * TS, TS * .3, TS * .1, 0, 0, 7); c.fill();
+  emoji("🦸", H.x, H.y + Math.sin(TD.time * 6) * 0.03, 0.55, H.face < 0);
+  c.fillStyle = "#132A2A"; c.beginPath(); c.roundRect(H.x * TS - 18, (H.y - .5) * TS - 10, 36, 18, 9); c.fill();
+  c.fillStyle = "#FFD34D"; c.font = "700 12px system-ui, sans-serif"; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText("ур." + H.level, H.x * TS, (H.y - .5) * TS - 1);
+  for (const s of TD.shots) {
+    c.beginPath();
+    if (s.kind === "arrow") { c.fillStyle = "#3B2A12"; c.arc(s.x * TS, s.y * TS, 4, 0, 7); }
+    else if (s.kind === "cannon") { c.fillStyle = "#222"; c.arc(s.x * TS, s.y * TS, 8, 0, 7); }
+    else { c.fillStyle = "#B98CFF"; c.shadowColor = "#B98CFF"; c.shadowBlur = 14; c.arc(s.x * TS, s.y * TS, 7, 0, 7); }
+    c.fill(); c.shadowBlur = 0;
+  }
+  for (const f of TD.fx) {
+    if (f.kind === "boom") { c.fillStyle = `rgba(255,170,60,${f.t * 2})`; c.beginPath(); c.arc(f.x * TS, f.y * TS, (0.9 - f.t) * TS, 0, 7); c.fill(); }
+    if (f.kind === "slash") { c.strokeStyle = `rgba(255,255,255,${f.t * 4})`; c.lineWidth = 4; c.beginPath(); c.arc(f.x * TS, f.y * TS, TS * .3, -1, 1.2); c.stroke(); }
+    if (f.kind === "text") { c.fillStyle = f.red ? `rgba(240,90,67,${Math.min(1, f.t * 2)})` : `rgba(255,211,77,${Math.min(1, f.t * 2)})`; c.font = "700 20px system-ui, sans-serif"; c.textAlign = "center"; c.fillText(f.text, f.x * TS, (f.y - .4 - (0.9 - f.t) * .5) * TS); }
+  }
+  const banner = TD.over ? (TD.over === "win" ? "Победа! Замок выстоял" : "Замок пал") : !TD.waveOn && TD.wave < TD_WAVES ? `Волна ${TD.wave + 1} через ${Math.ceil(TD.waveCd)} сек` : "";
+  if (banner) {
+    c.fillStyle = "rgba(10,20,20,.55)";
+    if (TD.over) c.fillRect(0, 0, cv.width, cv.height); else c.fillRect(0, cv.height / 2 - 40, cv.width, 80);
+    c.fillStyle = "#fff"; c.font = `600 40px ${getComputedStyle(document.body).fontFamily}`; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText(banner, cv.width / 2, cv.height / 2);
+  }
+}
+
+function renderTowers() {
+  const v = $("#v-towers");
+  if (!TD) { v.replaceChildren(towersMenu()); return; }
+  if (!v.querySelector("#td-canvas")) {
+    const cv = h("canvas", { id: "td-canvas", width: TD_COLS * TS, height: TD_ROWS * TS, "aria-label": "Карта: дорога, башни, враги и герой" });
+    cv.addEventListener("click", tdClick);
+    v.replaceChildren(h("div", { class: "td" }, h("div", { class: "hud", id: "td-hud" }), cv, h("div", { class: "panel", id: "td-panel" })));
+  }
+  tdHud(true); tdPanel(); tdDraw();
+}
+function towersMenu() {
+  return h("div", { class: "panel" },
+    h("div", {}, h("h2", {}, "Защита замка"), h("p", { class: "muted" }, "Враги идут по дороге к твоему замку. Ставь башни за монеты: монеты дают за каждого убитого врага. Башни улучшаются только английским: чем сильнее башня, тем сложнее задание. Твой герой бегает по карте и бьёт врагов, а каждый верный ответ делает его сильнее. У замка 15 жизней: каждый враг, который до него дошёл, отнимает жизни (огр 2, король скелетов сразу 5). Выдержи 10 волн.")),
+    h("div", { class: "army" }, Object.values(TOWERS).map(t => h("div", {}, h("span", { class: "ic" }, t.icon),
+      h("span", {}, h("b", {}, `${t.name}, ${t.cost} монет`), h("br"), `${t.note}; улучшение с заданием ${"★".repeat(t.tier)}`))),
+      h("div", {}, h("span", { class: "ic" }, "🦸"), h("span", {}, h("b", {}, "Герой"), h("br"), "нажми на карту, и он побежит туда"))),
+    h("p", { class: "note" }, "Волны идут сами, между волнами 8 секунд передышки. Пока ты отвечаешь на задание, битва продолжается, но её звуки молчат, чтобы было слышно английский. Если ошибёшься, башню можно будет улучшить снова через 8 секунд."),
+    h("div", {}, h("p", { class: "label", style: "margin-bottom:6px" }, "Сложность"),
+      h("div", { class: "chips" }, Object.entries(TD_LEVELS).map(([k, L]) => h("button", { class: "chip", "aria-pressed": (state.tdLevel in TD_LEVELS ? state.tdLevel : "hard") === k ? "true" : "false",
+        onclick: () => { state.tdLevel = k; save(); renderTowers(); } }, L.name)))),
+    h("button", { class: "btn", onclick: () => { sfx("ok"); tdNew(); } }, "Начать игру"));
+}
+function tdHud(force) {
+  const box = $("#td-hud"); if (!box) return;
+  const key = [TD.lives, TD.coins, TD.wave, TD.waveOn, Math.ceil(TD.waveCd), !!TD.over, state.sound].join("|");
+  if (!force && key === TD.hudKey) return;
+  TD.hudKey = key;
+  box.replaceChildren(
+    h("div", { class: "row", style: "gap:14px" }, h("span", { class: "stat-i", title: "Здоровье замка: сколько врагов ещё может прорваться" }, `Замок ❤ ${TD.lives} из ${TD_LIVES}`), h("span", { class: "stat-i", title: "Монеты" }, "🪙 " + TD.coins), h("span", { class: "stat-i" }, `Волна ${TD.wave} из ${TD_WAVES}`)),
+    h("div", { class: "row", style: "gap:6px" },
+      h("button", { class: "btn", style: "padding:8px 14px", disabled: TD.waveOn || !!TD.over || TD.wave >= TD_WAVES, onclick: tdStartWave }, TD.waveOn ? `Идёт волна ${TD.wave}…` : TD.wave >= TD_WAVES ? "Все волны отбиты" : `Волна ${TD.wave + 1} через ${Math.ceil(TD.waveCd)} с: начать сейчас`),
+      h("button", { class: "btn ghost", style: "padding:8px 12px", onclick: () => { state.sound = state.sound === false; save(); tdHud(true); } }, state.sound === false ? "Звук выкл" : "Звук вкл"),
+      h("button", { class: "btn ghost", style: "padding:8px 12px", onclick: () => { clearInterval(TD.timer); TD = null; renderTowers(); } }, "Новая игра")));
+  for (const b of document.querySelectorAll("#td-panel [data-cost]")) b.disabled = TD.coins < +b.dataset.cost || !!TD.over;
+}
+function tdStartWave() {
+  if (TD.waveOn || TD.over) return;
+  TD.wave++; TD.queue = waveList(TD.wave); TD.waveOn = true; TD.spawnCd = 0.4; TD.msg = ""; sfx("swing"); tdHud(true); tdPanel();
+}
+function tdClick(ev) {
+  if (!TD || TD.over) return;
+  const r = ev.currentTarget.getBoundingClientRect(), x = (ev.clientX - r.left) / r.width * TD_COLS, y = (ev.clientY - r.top) / r.height * TD_ROWS;
+  const tx = Math.floor(x), ty = Math.floor(y), tower = TD.towers.find(t => t.x === tx && t.y === ty);
+  if (TD.task && !TD.task.done) { TD.hero.tx = Math.max(0.3, Math.min(TD_COLS - 0.3, x)); TD.hero.ty = Math.max(0.4, Math.min(TD_ROWS - 0.3, y)); return; } // while answering, taps only move the hero
+  if (TD.build) {
+    const T = TOWERS[TD.build];
+    if (!tower && !TD_PATH.has(tx + "," + ty) && TD.coins >= T.cost) {
+      TD.coins -= T.cost; const t = { type: TD.build, x: tx, y: ty, level: 1, cd: 0, block: 0 };
+      TD.towers.push(t); TD.sel = t; sfx("ok");
+    }
+    TD.build = null; tdPanel(); return;
+  }
+  if (tower) { TD.sel = tower; tdPanel(); return; }
+  TD.sel = null; TD.hero.tx = Math.max(0.3, Math.min(TD_COLS - 0.3, x)); TD.hero.ty = Math.max(0.4, Math.min(TD_ROWS - 0.3, y)); tdPanel();
+}
+function tdPanel() {
+  const p = $("#td-panel"); if (!p) return; p.replaceChildren();
+  if (TD.over) {
+    p.append(h("div", { class: "empty" }, h("h2", {}, TD.over === "win" ? "Победа! Все 10 волн отбиты" : `Замок пал на волне ${TD.wave}`),
+      h("p", { class: "muted" }, `Верных ответов: ${TD.answers}. Герой дошёл до уровня ${TD.hero.level}.`),
+      h("button", { class: "btn", onclick: tdNew }, "Сыграть ещё"))); return;
+  }
+  const t = TD.task;
+  if (t && t.failed) {
+    p.append(h("p", { class: "feedback no" }, t.timeout ? "Время вышло." : "Неверно."), h("p", {}, t.failText),
+      h("p", { class: "label" }, "Правильно"), h("p", { style: "font-family:var(--display);font-size:1.15rem" }, t.p.en), tr(t.p), h("p", { class: "muted" }, t.p.ru),
+      h("div", { class: "row" }, speakBtn(t.p.en), h("button", { class: "btn", onclick: () => { TD.task = null; tdPanel(); } }, "Понятно")));
+    return;
+  }
+  if (t) {
+    const left = Math.max(0, t.end - Date.now());
+    p.append(h("div", { class: "card-top" }, h("b", {}, t.title), h("span", { class: "progress-line", id: "td-left" }, Math.ceil(left / 1000) + " сек")),
+      h("p", { class: "label" }, `Задание ${"★".repeat(t.tier)} ${TIERS[t.tier].name}`),
+      h("div", { class: "bar timer" }, h("i", { id: "td-timer", style: `width:${left / (t.end - t.start) * 100}%` })),
+      ...taskBody(t, ok => tdFinish(t, ok), tdPanel),
+      h("button", { class: "btn ghost", onclick: () => tdFinish(t, false) }, "Не знаю"));
+    return;
+  }
+  if (TD.msg) p.append(h("p", { class: "feedback ok" }, TD.msg));
+  p.append(h("p", { class: "label" }, TD.build ? `Нажми на клетку с травой, чтобы поставить: ${TOWERS[TD.build].name}` : "Построить башню"),
+    h("div", { class: "shop" }, Object.entries(TOWERS).map(([k, T]) => h("button", { class: "shopitem", "data-cost": T.cost, "aria-pressed": TD.build === k ? "true" : "false", disabled: TD.coins < T.cost,
+      onclick: () => { TD.build = TD.build === k ? null : k; TD.sel = null; tdPanel(); } },
+      h("span", { class: "ic" }, T.icon), h("span", {}, h("b", {}, T.name), h("small", {}, `🪙 ${T.cost} · ${T.note}`))))));
+  const s = TD.sel;
+  if (s) {
+    const st = towerStats(s), T = TOWERS[s.type], wait = Math.ceil(s.block - TD.time);
+    p.append(h("div", { class: "unitcard" }, h("span", { class: "big" }, T.icon), h("div", {}, h("b", {}, `${T.name} ${"★".repeat(s.level)}`),
+      h("div", { class: "statrow" }, h("span", {}, "Урон ", h("b", {}, st.dmg)), h("span", {}, "Дальность ", h("b", {}, st.range.toFixed(1))), h("span", {}, "Выстрел раз в ", h("b", {}, st.rate.toFixed(2) + " с"))))),
+      s.level >= TD_MAX_LVL ? h("p", { class: "note" }, "Башня улучшена до максимума.")
+        : h("button", { class: "btn", disabled: wait > 0, onclick: () => tdOpenTask(upTier(s), `Улучшение: ${T.name} до уровня ${s.level + 1}`,
+            () => { s.level++; TD.msg = `${T.name} теперь уровня ${s.level}!`; }, () => { s.block = TD.time + 8; }, `${T.name} не улучшены.`) },
+          wait > 0 ? `Улучшить можно через ${wait} сек` : `Улучшить: задание ${"★".repeat(upTier(s))} ${TIERS[upTier(s)].name}`));
+  }
+  const H = TD.hero, hs = heroStats(H.level), ht = heroTier(H.level);
+  p.append(h("div", { class: "unitcard" }, h("span", { class: "big" }, "🦸"), h("div", {}, h("b", {}, `Герой, уровень ${H.level}`),
+      h("div", { class: "statrow" }, h("span", {}, "Урон ", h("b", {}, hs.dmg)), h("span", {}, "Скорость ", h("b", {}, hs.speed.toFixed(1))), h("span", {}, "Удар раз в ", h("b", {}, hs.rate.toFixed(2) + " с"))),
+      h("p", { class: "note" }, "Нажми на карту, и герой побежит туда. Врагов рядом он бьёт сам."))),
+    h("button", { class: "btn ghost", onclick: () => tdOpenTask(ht, `Прокачка героя до уровня ${H.level + 1}`, () => { H.level++; TD.msg = `Герой стал сильнее: уровень ${H.level}!`; }, null, "Герой не прокачался.") },
+      `Прокачать героя: задание ${"★".repeat(ht)} ${TIERS[ht].name}`));
+}
+function tdOpenTask(tier, title, onOk, onFail, failText) {
+  const t = makeTask(tier);
+  Object.assign(t, { title, onOk, onFail, failText, start: Date.now() });
+  t.end = t.start + TIERS[tier].time * 1000;
+  TD.task = t; TD.build = null; TD.msg = ""; tdHud(true); tdPanel();
+  if (t.kind === "pick" && t.field === "ru") speak(t.p.en);
+  clearInterval(TD.timer);
+  TD.timer = setInterval(() => {
+    if (!TD || TD.task !== t || t.done) return;
+    const left = t.end - Date.now(), bar = $("#td-timer"), txt = $("#td-left");
+    if (bar) bar.style.width = Math.max(0, left / (t.end - t.start) * 100) + "%";
+    if (txt) txt.textContent = Math.max(0, Math.ceil(left / 1000)) + " сек";
+    if (left <= 0) tdFinish(t, false);
+  }, 200);
+}
+function tdFinish(t, ok) {
+  if (!TD || TD.task !== t || t.done) return;
+  t.done = true; clearInterval(TD.timer);
+  if (ok) { TD.answers++; activity(); sfx("ok"); t.onOk(); TD.task = null; speak(t.p.en); }
+  else { miss(t.p); sfx("fail"); t.failed = true; t.timeout = Date.now() >= t.end; t.onFail?.(); }
+  tdHud(true); tdPanel();
+}
+
+// ---------- Navigation ----------
+let current = "home";
+function show(view, keep) {
+  current = view;
+  document.querySelectorAll(".view").forEach(v => v.hidden = v.id !== "v-" + view);
+  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-current", t.dataset.view === view ? "true" : "false"));
+  ({ home: renderHome, battle: renderBattle, towers: renderTowers, cards: () => startCards(false), quiz: () => keep && quiz.q ? renderQuiz(quiz) : startQuiz(quiz), listen: () => keep && listen.q ? renderQuiz(listen) : startQuiz(listen), say: () => keep && say.list.length ? renderSay() : startSay(), build: () => build.p ? renderBuild() : nextBuild(), chat: renderChat, book: renderBook })[view]();
+  try { localStorage.setItem("eng-view", view); } catch {}
+}
+$("#tabs").addEventListener("click", e => { const t = e.target.closest(".tab"); if (t) show(t.dataset.view); });
+function renderStreak() { $("#streakN").textContent = streakNow(); }
+
+// ---------- Home ----------
+function renderHome() {
+  rollDay(); const t = today(), act = active();
+  const due = act.filter(p => state.cards[p.id] && state.cards[p.id].due <= t).length;
+  const learned = PHRASES.filter(p => (state.cards[p.id]?.b || 0) >= 3).length;
+  const started = PHRASES.filter(p => state.cards[p.id]).length;
+  const newLeft = Math.min(Math.max(0, NEW_PER_DAY - state.newCount), act.filter(p => !state.cards[p.id]).length);
+  const pct = Math.min(100, Math.round(state.done / DAILY_GOAL * 100));
+  const v = $("#v-home"); v.replaceChildren();
+  const stat = (n, l) => h("div", { class: "stat" }, h("span", { class: "n" }, n), h("span", { class: "muted" }, l));
+  const goBtn = due + newLeft > 0
+    ? h("button", { class: "btn", onclick: () => show("cards") }, `Начать: ${due + newLeft} ${plural(due + newLeft, "фраза", "фразы", "фраз")}`)
+    : h("button", { class: "btn ghost", onclick: () => show("chat") }, "На сегодня карточки пройдены. Поговорить с Claude");
+  v.append(
+    h("div", { class: "panel" },
+      h("div", {}, h("h2", {}, started ? "Приветствую! Продолжаем" : "Приветствую! Начнём с первых фраз"),
+        h("p", { class: "muted" }, "Учим готовые фразы для жизни: в магазине, на улице, в банке, в кафе. По 10–15 минут в день.")),
+      h("div", { class: "stats" }, stat(due, "повторить сегодня"), stat(newLeft, "новых на сегодня"), stat(learned, "фраз выучено из " + PHRASES.length), stat(streakNow(), "дней подряд")),
+      h("div", { class: "row", style: "justify-content:space-between" }, h("span", { class: "label" }, "Цель дня"), h("span", { class: "progress-line" }, `${Math.min(state.done, DAILY_GOAL)} из ${DAILY_GOAL} ответов`)),
+      h("div", { class: "bar" }, h("i", { style: `width:${pct}%` })),
+      goBtn
+    ),
+    h("div", { class: "panel" },
+      h("div", {}, h("h2", {}, "Ситуации"), h("p", { class: "muted" }, "Выбери, что сейчас важнее. Отключённые ситуации не попадают в упражнения.")),
+      h("div", { class: "chips" }, SITUATIONS.map(s => {
+        const n = PHRASES.filter(p => p.sit === s.id).length, k = PHRASES.filter(p => p.sit === s.id && (state.cards[p.id]?.b || 0) >= 3).length;
+        return h("button", { class: "chip", "aria-pressed": state.sits.includes(s.id) ? "true" : "false", onclick: () => {
+          const on = state.sits.includes(s.id);
+          if (on && state.sits.length === 1) return;
+          state.sits = on ? state.sits.filter(x => x !== s.id) : [...state.sits, s.id]; save(); renderHome();
+        } }, s.name, h("span", { class: "c" }, `${k}/${n}`));
+      })),
+      h("div", { class: "row" }, h("button", { class: "chip", "aria-pressed": state.hint !== false ? "true" : "false",
+        onclick: () => { state.hint = state.hint === false; save(); renderHome(); } }, "Подсказка произношения русскими буквами"),
+        h("span", { class: "note" }, "Например: Nice to meet you [найс ту мит ю]"))
+    ),
+    h("div", { class: "panel" },
+      h("h2", {}, "Упражнения"),
+      h("div", { class: "modes" },
+        mode("battle", "Битва", "Армия на доске: отвечай по-английски, чтобы твои солдаты ходили и били"),
+        mode("towers", "Башни", "Защити замок: башни и герой становятся сильнее за верные ответы"),
+        mode("cards", "Карточки", "Новые фразы и повторение в нужный день"),
+        mode("quiz", "Что сказать?", "Ситуация по-русски, выбери английскую фразу"),
+        mode("listen", "На слух", "Послушай фразу и пойми, что тебе сказали"),
+        mode("say", "Произношение", "Скажи фразу в микрофон, приложение покажет ошибки"),
+        mode("build", "Собери фразу", "Составь фразу из слов, чтобы запомнить порядок"),
+        mode("chat", "Диалог", "Живой разговор с Claude в магазине, такси, кафе"),
+        mode("book", "Разговорник", "Все фразы по ситуациям с озвучкой"))
+    )
+  );
+}
+const mode = (id, t, d) => h("button", { class: "mode", onclick: () => show(id) }, h("strong", {}, t), h("span", {}, d));
+function plural(n, a, b, c) { const m = n % 10, k = n % 100; return m === 1 && k !== 11 ? a : m >= 2 && m <= 4 && (k < 12 || k > 14) ? b : c; }
+
+// ---------- Cards ----------
+let cs = null;
+function startCards(force, extra = 0) {
+  rollDay();
+  if (cs && cs.queue.length && !force) return renderCard();
+  const t = today(), act = active();
+  const due = shuffle(act.filter(p => state.cards[p.id] && state.cards[p.id].due <= t));
+  const left = Math.max(0, NEW_PER_DAY - state.newCount) + extra;
+  const nw = act.filter(p => !state.cards[p.id]).slice(0, left);
+  cs = { queue: [...due, ...nw], open: false, done: 0, ok: 0, retried: new Set() };
+  renderCard();
+}
+function renderCard() {
+  const v = $("#v-cards"); v.replaceChildren();
+  const p = cs.queue[0];
+  if (!p) {
+    const moreNew = active().some(x => !state.cards[x.id]);
+    v.append(h("div", { class: "panel empty" },
+      h("h2", {}, cs.done ? "Готово на сегодня!" : "Сейчас повторять нечего"),
+      h("p", { class: "muted" }, cs.done ? `Ты прошёл ${cs.done} ${plural(cs.done, "карточку", "карточки", "карточек")}. Следующие повторения появятся завтра.` : "Все фразы повторены вовремя."),
+      h("div", { class: "row", style: "justify-content:center" },
+        moreNew ? h("button", { class: "btn", onclick: () => startCards(true, 5) }, "Ещё 5 новых фраз") : null,
+        h("button", { class: "btn ghost", onclick: () => show("quiz") }, "Проверить себя"))));
+    return;
+  }
+  const isNew = !state.cards[p.id], hear = p.type === "hear";
+  const front = hear
+    ? h("div", {}, h("p", { class: "prompt en" }, p.en), tr(p))
+    : h("p", { class: "prompt" }, p.ru);
+  const answer = h("div", { class: "answer", hidden: !cs.open },
+    hear ? h("p", { class: "prompt", style: "font-size:1.2rem" }, p.ru)
+      : SR && !micBlocked ? pronounce(p)
+      : [h("p", { class: "en" }, p.en), tr(p), h("div", { class: "row" }, speakBtn(p.en), speakBtn(p.en, "Медленно", true))]);
+  const actions = cs.open
+    ? h("div", { class: "row split" },
+        h("button", { class: "btn bad", onclick: () => answerCard(false) }, "Не вспомнил"),
+        h("button", { class: "btn good", onclick: () => answerCard(true) }, "Вспомнил"))
+    : h("button", { class: "btn", onclick: () => { cs.open = true; renderCard(); if (!hear) speak(p.en); } }, "Показать ответ");
+  v.append(h("div", { class: "panel" },
+    h("div", { class: "card-top" }, h("div", { class: "row" }, h("span", { class: "pill" }, SIT[p.sit].name), typePill(p), isNew ? h("span", { class: "pill new" }, "новая") : null),
+      h("span", { class: "progress-line" }, `осталось ${cs.queue.length}`)),
+    h("p", { class: "label" }, hear ? "Тебе говорят. Что это значит?" : "Как сказать по-английски?"),
+    front, hear ? h("div", { class: "row" }, speakBtn(p.en), speakBtn(p.en, "Медленно", true)) : null,
+    answer, actions,
+    h("p", { class: "note" }, "Пробел: показать ответ. Клавиши 1 и 2: не вспомнил / вспомнил.")));
+  if (hear && !cs.open) speak(p.en);
+}
+function answerCard(ok) {
+  const p = cs.queue.shift(); grade(p, ok); cs.done++; cs.open = false;
+  if (!ok && !cs.retried.has(p.id)) { cs.retried.add(p.id); cs.queue.splice(Math.min(3, cs.queue.length), 0, p); }
+  renderCard();
+}
+document.addEventListener("keydown", e => {
+  if (current !== "cards" || !cs || !cs.queue.length || e.target.tagName === "INPUT") return;
+  if (e.code === "Space" && !cs.open) { e.preventDefault(); cs.open = true; renderCard(); }
+  else if (cs.open && e.key === "1") answerCard(false);
+  else if (cs.open && e.key === "2") answerCard(true);
+});
+
+// ---------- Quiz & listening ----------
+const quiz = { kind: "quiz", view: "#v-quiz" }, listen = { kind: "listen", view: "#v-listen" };
+function distractors(p, n, field) {
+  const same = shuffle(PHRASES.filter(x => x.sit === p.sit && x.id !== p.id));
+  const rest = shuffle(PHRASES.filter(x => x.sit !== p.sit));
+  const out = [], seen = new Set([p[field]]);
+  for (const x of [...same, ...rest]) { if (out.length >= n) break; if (!seen.has(x[field])) { seen.add(x[field]); out.push(x); } }
+  return out;
+}
+function startQuiz(s) {
+  const act = active(), known = act.filter(p => state.cards[p.id]);
+  const pool = known.length >= 6 ? known : act;
+  s.list = shuffle(pool).slice(0, 10).map(p => ({ p, opts: shuffle([p, ...distractors(p, 3, s.kind === "quiz" ? "en" : "ru")]) }));
+  s.i = 0; s.score = 0; s.q = s.list[0]; s.picked = null;
+  renderQuiz(s);
+}
+function renderQuiz(s) {
+  const v = $(s.view); v.replaceChildren();
+  if (s.kind === "listen" && !s.list.every(x => canPlay(x.p.en))) { v.append(h("div", { class: "panel empty" }, h("h2", {}, "Озвучка недоступна"), h("p", { class: "muted" }, "Этот браузер не умеет читать текст вслух. Открой страницу в Chrome или в приложении Claude."))); return; }
+  if (!s.q) {
+    v.append(h("div", { class: "panel empty" }, h("h2", {}, `${s.score} из ${s.list.length}`),
+      h("p", { class: "muted" }, s.score >= 8 ? "Отлично! Эти фразы ты уже знаешь." : "Фразы с ошибками вернутся в карточки уже сегодня."),
+      h("button", { class: "btn", onclick: () => startQuiz(s) }, "Ещё 10 вопросов")));
+    return;
+  }
+  const { p, opts } = s.q, field = s.kind === "quiz" ? "en" : "ru";
+  const prompt = s.kind === "quiz"
+    ? [h("p", { class: "label" }, "Как сказать по-английски?"), h("p", { class: "prompt" }, p.ru)]
+    : [h("p", { class: "label" }, p.type === "hear" ? "Тебе говорят. Что это значит?" : "Что значит эта фраза?"),
+       h("div", { class: "row" }, speakBtn(p.en, "Ещё раз"), speakBtn(p.en, "Медленно", true)),
+       s.picked ? h("p", { class: "prompt en" }, p.en) : null, s.picked ? tr(p) : null];
+  const done = !!s.picked;
+  v.append(h("div", { class: "panel" },
+    h("div", { class: "card-top" }, h("div", { class: "row" }, h("span", { class: "pill" }, SIT[p.sit].name), typePill(p)), h("span", { class: "progress-line" }, `${s.i + 1} / ${s.list.length}`)),
+    ...prompt,
+    h("div", { class: "opts" }, opts.map(o => h("button", {
+      class: "opt" + (done && o.id === p.id ? " right" : "") + (done && s.picked === o.id && o.id !== p.id ? " wrong" : ""),
+      disabled: done, onclick: () => {
+        s.picked = o.id; const ok = o.id === p.id;
+        if (ok) s.score++; else miss(p);
+        activity(); if (s.kind === "quiz") speak(p.en); renderQuiz(s);
+      } }, o[field]))),
+    done ? h("p", { class: "feedback " + (s.picked === p.id ? "ok" : "no") }, s.picked === p.id ? "Верно!" : (s.kind === "quiz" ? "Правильно: " + p.en : "Правильно: " + p.ru)) : null,
+    done && s.kind === "quiz" ? tr(p) : null,
+    done ? h("div", { class: "row" }, s.kind === "quiz" ? speakBtn(p.en) : null, h("button", { class: "btn", onclick: () => { s.i++; s.q = s.list[s.i]; s.picked = null; renderQuiz(s); } }, s.i + 1 < s.list.length ? "Дальше" : "Результат")) : null));
+  if (s.kind === "listen" && !done) speak(p.en);
+}
+
+// ---------- Build a phrase ----------
+const build = { p: null, pool: [], line: [], state: null };
+function nextBuild() {
+  const act = active().filter(p => p.en.split(" ").length >= 3);
+  build.p = shuffle(act)[0];
+  build.pool = shuffle(build.p.en.split(" ").map((w, i) => ({ w, i })));
+  build.line = []; build.state = null; renderBuild();
+}
+function renderBuild() {
+  const v = $("#v-build"); v.replaceChildren(); const p = build.p;
+  const chip = (x, from) => h("button", { class: "wordchip", disabled: !!build.state, onclick: () => {
+    if (from === "pool") { build.pool = build.pool.filter(y => y !== x); build.line.push(x); }
+    else { build.line = build.line.filter(y => y !== x); build.pool.push(x); }
+    renderBuild(); } }, x.w);
+  const norm = s => s.toLowerCase().replace(/[^a-z0-9' ]/g, "").replace(/\s+/g, " ").trim();
+  v.append(h("div", { class: "panel" },
+    h("div", { class: "card-top" }, h("div", { class: "row" }, h("span", { class: "pill" }, SIT[p.sit].name), typePill(p))),
+    h("p", { class: "label" }, "Собери по-английски"), h("p", { class: "prompt" }, p.ru),
+    h("div", { class: "build" + (build.state ? " " + build.state : "") }, build.line.length ? build.line.map(x => chip(x, "line")) : h("span", { class: "muted" }, "Нажимай на слова ниже")),
+    h("div", { class: "chips" }, build.pool.map(x => chip(x, "pool"))),
+    build.state === "no" ? h("p", { class: "feedback no" }, "Правильно: " + p.en) : build.state === "ok" ? h("p", { class: "feedback ok" }, "Верно!") : null,
+    build.state ? tr(p) : null,
+    build.state
+      ? h("div", { class: "row" }, speakBtn(p.en), h("button", { class: "btn", onclick: nextBuild }, "Следующая фраза"))
+      : h("div", { class: "row" }, h("button", { class: "btn", disabled: build.pool.length > 0, onclick: () => {
+          build.state = norm(build.line.map(x => x.w).join(" ")) === norm(p.en) ? "ok" : "no";
+          if (build.state === "no") miss(p);
+          activity(); speak(p.en); renderBuild(); } }, "Проверить"),
+          h("button", { class: "btn ghost", onclick: nextBuild }, "Пропустить"))));
+}
+
+// ---------- Dialog with Claude ----------
+const SCEN = [
+  { id: "meet", t: "Знакомство", p: "You meet Vlad at a cafe in Nha Trang. You are a friendly traveler from Australia. Get to know him." },
+  { id: "shop", t: "Магазин", p: "You are a shop assistant in a clothes shop in Nha Trang. Vlad wants to buy a T-shirt. Talk about sizes and prices." },
+  { id: "way", t: "Как пройти", p: "You are a local person on the street. Vlad is lost and asks for directions. Give simple directions (left, right, straight, near, far)." },
+  { id: "cafe", t: "Кафе", p: "You are a waiter in a cafe. Take Vlad's order and later bring the bill." },
+  { id: "bank", t: "Банк", p: "You are a bank employee. Vlad wants to open an account and get a bank card. Ask about documents." },
+  { id: "taxi", t: "Такси", p: "You are a taxi driver in Nha Trang. Vlad gets in your car. Ask where he is going and chat a little." },
+  { id: "home", t: "Аренда жилья", p: "You are a landlord. Vlad wants to rent an apartment for some months. Talk about price, rooms and bills." }
+];
+const chat = { scen: null, turns: [], busy: false, ctl: null, err: "" };
+let samplePromise = null;
+const getSample = () => samplePromise ??= (window.claude?.use ? claude.use("sample") : Promise.resolve(null));
+function rules(s) {
+  return `You are a friendly English conversation partner for Vlad, a Russian speaker (36, lives in Nha Trang, Vietnam). His English level is between A1 and A2. He learns practical phrases for real life.
+Scenario: ${s.p}
+Rules:
+- Use very simple English: short sentences and common everyday words.
+- Say at most 2 short sentences, then ask one simple question so he can answer.
+- Stay in your role in the scenario.
+- If his last message has a mistake, correct only the most important one, kindly. If he writes in Russian, show him how to say it in English.
+Answer in exactly this format, three lines, nothing else:
+EN: <your reply in English>
+RU: <Russian translation of your reply>
+FIX: <if his last message had a mistake or was in Russian: the correct English sentence, then " — " and a very short explanation in Russian; otherwise just ->`;
+}
+function parseReply(text) {
+  const g = k => { const m = text.match(new RegExp("^\\s*" + k + ":\\s*(.*)$", "mi")); return m ? m[1].trim() : ""; };
+  let en = g("EN"), ru = g("RU"), fix = g("FIX");
+  if (!en) en = text.trim();
+  if (/^[-—–\s]*$/.test(fix)) fix = "";
+  return { en, ru, fix };
+}
+async function ask() {
+  const sample = await getSample();
+  if (!sample) { chat.err = "Диалог работает, когда страница открыта в Claude."; renderChat(); return; }
+  chat.busy = true; chat.err = ""; chat.ctl = new AbortController(); renderChat();
+  const input = [{ role: "user", content: rules(chat.scen) }, ...chat.turns.slice(-14).map(t => ({ role: t.role, content: t.content }))];
+  try {
+    const { text } = await sample(input, { modelTier: "quick", cache: false, signal: chat.ctl.signal });
+    const r = parseReply(text);
+    const lastMe = [...chat.turns].reverse().find(t => t.role === "user" && !t.hidden);
+    if (lastMe && r.fix) lastMe.fix = r.fix;
+    chat.turns.push({ role: "assistant", content: text, ...r });
+    speak(r.en);
+    if (lastMe) activity();
+  } catch (e) {
+    chat.err = e?.code === "cancelled" ? "" : e?.code === "rate_limited" ? "Слишком много сообщений подряд. Подожди немного и попробуй снова."
+      : ["not_granted", "sampling_disabled", "not_declared", "capability_disabled"].includes(e?.code) ? "Диалог выключен: нужно разрешить странице обращаться к Claude."
+      : "Не получилось получить ответ. Нажми «Отправить» ещё раз.";
+  }
+  chat.busy = false; renderChat();
+}
+function startScen(s) { chat.scen = s; chat.turns = [{ role: "user", content: "(Start the conversation with your first line in the role. FIX: -)", hidden: true }]; ask(); }
+function renderChat() {
+  const v = $("#v-chat"); v.replaceChildren();
+  const scenRow = h("div", { class: "chips" }, SCEN.map(s => h("button", { class: "chip", "aria-pressed": chat.scen?.id === s.id ? "true" : "false", disabled: chat.busy, onclick: () => startScen(s) }, s.t)));
+  if (!chat.scen) {
+    v.append(h("div", { class: "panel" }, h("div", {}, h("h2", {}, "Диалог с Claude"),
+      h("p", { class: "muted" }, "Выбери ситуацию. Claude сыграет продавца, таксиста или прохожего и будет говорить просто. Если ошибёшься, он покажет, как сказать правильно. Можно писать и по-русски, если не знаешь, как сказать.")), scenRow));
+    return;
+  }
+  const list = h("div", { class: "chat", id: "chatlist" });
+  for (const t of chat.turns) {
+    if (t.hidden) continue;
+    if (t.role === "user") {
+      list.append(h("div", { class: "msg me" }, t.content));
+      if (t.fix) list.append(h("div", { class: "fix" }, h("b", {}, "Лучше сказать"), t.fix));
+    } else {
+      const ru = h("p", { class: "ru", hidden: true }, t.ru);
+      list.append(h("div", { class: "msg bot" }, h("p", {}, t.en), ru,
+        h("div", { class: "tools" },
+          canSpeak ? h("button", { type: "button", onclick: () => speak(t.en) }, "Послушать") : null,
+          canSpeak ? h("button", { type: "button", onclick: () => speak(t.en, true) }, "Медленно") : null,
+          t.ru ? h("button", { type: "button", onclick: e => { ru.hidden = !ru.hidden; e.target.textContent = ru.hidden ? "Перевод" : "Скрыть перевод"; } }, "Перевод") : null)));
+    }
+  }
+  if (chat.busy) list.append(h("div", { class: "msg bot" }, h("span", { class: "muted" }, "Claude печатает…")));
+  const inp = h("input", { id: "chat-input", type: "text", placeholder: "Напиши ответ по-английски…", autocomplete: "off", disabled: chat.busy });
+  const send = () => { const val = inp.value.trim(); if (!val || chat.busy) return; chat.turns.push({ role: "user", content: val }); ask(); };
+  inp.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+  v.append(h("div", { class: "panel" },
+    h("div", { class: "card-top" }, h("h2", {}, chat.scen.t), h("button", { class: "btn ghost", style: "padding:8px 14px", disabled: chat.busy, onclick: () => startScen(chat.scen) }, "Начать заново")),
+    scenRow, list,
+    chat.err ? h("p", { class: "feedback no" }, chat.err) : null,
+    h("div", { class: "composer" }, inp,
+      chat.busy ? h("button", { class: "btn ghost", onclick: () => chat.ctl?.abort() }, "Стоп") : h("button", { class: "btn", onclick: send }, "Отправить"))));
+  list.scrollTop = list.scrollHeight;
+  if (!chat.busy) inp.focus({ preventScroll: true });
+}
+
+// ---------- Phrasebook ----------
+let bookQuery = "";
+function renderBook() {
+  const v = $("#v-book"); v.replaceChildren();
+  const search = h("input", { class: "search", id: "book-search", type: "search", placeholder: "Поиск по-русски или по-английски", value: bookQuery });
+  const body = h("div", { style: "display:flex;flex-direction:column;gap:18px" });
+  const fill = () => {
+    body.replaceChildren(); const q = bookQuery.toLowerCase();
+    for (const s of SITUATIONS) {
+      const items = PHRASES.filter(p => p.sit === s.id && (!q || p.en.toLowerCase().includes(q) || p.ru.toLowerCase().includes(q)));
+      if (!items.length) continue;
+      body.append(h("div", { class: "phr-group" }, h("p", { class: "label", style: "padding-bottom:6px" }, s.name),
+        items.map(p => {
+          const lv = state.cards[p.id]?.b || 0;
+          const b = h("button", { class: "iconbtn", type: "button", "aria-label": "Послушать: " + p.en, onclick: () => speak(p.en) }); b.innerHTML = SPK;
+          if (!canPlay(p.en)) b.hidden = true;
+          return h("div", { class: "phr" }, h("div", { class: "t" }, h("strong", {}, p.en), state.hint !== false && p.tr ? h("span", { class: "tr", style: "display:block" }, p.tr) : null, h("span", {}, p.ru)),
+            h("div", { class: "r" }, h("span", { class: "lvl", title: lv ? `Уровень ${lv} из 6` : "Ещё не учил" }, h("i", { style: `width:${lv / 6 * 100}%` })), b));
+        })));
+    }
+    if (!body.children.length) body.append(h("p", { class: "muted" }, "Ничего не нашлось."));
+  };
+  search.addEventListener("input", () => { bookQuery = search.value; fill(); });
+  fill();
+  v.append(h("div", { class: "panel" }, h("div", {}, h("h2", {}, "Разговорник"), h("p", { class: "muted" }, `${PHRASES.length} фраз. Полоска показывает, насколько хорошо ты знаешь фразу.`)), search, body));
+}
+
+// ---------- Start ----------
+renderStreak();
+let startView = "home"; try { startView = localStorage.getItem("eng-view") || "home"; } catch {}
+show(["home", "battle", "towers", "cards", "quiz", "listen", "say", "build", "chat", "book"].includes(startView) ? startView : "home");
+</script>
